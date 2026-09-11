@@ -43,13 +43,16 @@ export function Hero() {
             </Link>
           </Button>
           <Button
-            size="lg"
-            variant="outline"
-            className="h-13 w-full border-neon/30 bg-transparent px-8 font-mono text-sm font-semibold tracking-wide text-foreground hover:bg-neon-dim hover:text-neon sm:w-auto"
-          >
-            <Database className="h-4 w-4" aria-hidden="true" />
-            Store 500TB · $0.005/GB
-          </Button>
+  asChild
+  size="lg"
+  variant="outline"
+  className="h-13 w-full border-neon/30 bg-transparent px-8 font-mono text-sm font-semi"
+>
+  <Link href="/store">
+    <Database className="h-4 w-4" aria-hidden="true" />
+    Store 500TB · $0.005/GB
+  </Link>
+</Button>
         </div>
 
         <WaitlistForm />
