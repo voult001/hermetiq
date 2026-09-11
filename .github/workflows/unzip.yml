@@ -1,0 +1,16 @@
+name: Unzip
+on: [push]
+jobs:
+  unzip:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          unzip -o voult.zip
+          rm voult.zip
+          rm -rf .github
+          git config user.name "voult"
+          git config user.email "voult@voult.com"
+          git add .
+          git commit -m "unzip voult"
+          git push
