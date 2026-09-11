@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { Lock } from "lucide-react"
+import Link from "next/link"
 
 export function SiteHeader() {
   return (
@@ -24,11 +25,11 @@ export function SiteHeader() {
           </span>
         </nav>
 
-        <Button
+        <Button asChild
           size="sm"
           className="bg-neon font-mono text-xs font-semibold tracking-wide text-primary-foreground hover:bg-neon/90"
         >
-          Launch Console
+            <Link href="/store">Launch Console</Link>
         </Button>
       </div>
     </header>
