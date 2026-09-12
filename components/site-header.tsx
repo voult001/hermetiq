@@ -1,36 +1,29 @@
-import { Button } from "@/components/ui/button"
-import { Lock } from "lucide-react"
 import Link from "next/link"
+import { Button } from "@/components/ui/button"
 
 export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-50 border-b border-border/60 bg-background/70 backdrop-blur-xl">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
+    <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-black/50 backdrop-blur">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+        <Link href="/" className="font-mono font-bold text-[#39FF14] tracking-widest">
+          VAULTBNB
+        </Link>
+        
         <div className="flex items-center gap-3">
-          <div className="flex h-8 w-8 items-center justify-center rounded-md border border-neon/30 bg-neon-dim">
-            <Lock className="h-4 w-4 text-neon" aria-hidden="true" />
-          </div>
-          <div className="flex flex-col leading-none">
-            <span className="font-mono text-lg font-bold tracking-widest text-foreground">VAULTBNB</span>
-            <span className="font-mono text-[10px] tracking-[0.25em] text-neon">616TB</span>
-          </div>
+          <Link href="/host" className="font-mono text-sm opacity-70 hover:opacity-100">
+            Become a Host
+          </Link>
+          <Link href="/signup">
+            <Button variant="outline" className="rounded-full px-5 font-mono border-white/20 bg-transparent">
+              Sign In
+            </Button>
+          </Link>
+          <Link href="/signup">
+            <Button className="bg-[#39FF14] text-black hover:bg-[#39FF14]/90 rounded-full px-5 font-mono font-bold">
+              Sign Up
+            </Button>
+          </Link>
         </div>
-
-        <nav className="hidden items-center gap-2 md:flex" aria-label="Trust indicators">
-          <span className="rounded-full border border-neon/25 bg-neon-dim px-3 py-1 font-mono text-xs tracking-wider text-neon">
-            ENCRYPTED
-          </span>
-          <span className="rounded-full border border-border px-3 py-1 font-mono text-xs tracking-wider text-muted-foreground">
-            &amp; BLIND
-          </span>
-        </nav>
-
-        <Button asChild
-          size="sm"
-          className="bg-neon font-mono text-xs font-semibold tracking-wide text-primary-foreground hover:bg-neon/90"
-        >
-            <Link href="/store">Launch Console</Link>
-        </Button>
       </div>
     </header>
   )
