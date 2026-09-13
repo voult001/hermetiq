@@ -1,5 +1,4 @@
 // Vaultbnb-001-FINAL - Transfer-Efficiency Allocation
-// Mathfla75@gmail.com
 
 export function getUnits(freeGB: number) {
   return Math.floor(freeGB / 50);
