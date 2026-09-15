@@ -1,9 +1,9 @@
 "use client"
-import { useState } from "react"
+import { useState, Suspense } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { supabase } from "@/lib/supabase"
 
-export default function SignInPage() {
+function SignInForm() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [err, setErr] = useState("")
@@ -31,15 +31,19 @@ export default function SignInPage() {
         <p className="text-sm text-zinc-400">Sign in to Vault - will go to {next}</p>
         <input value={email} onChange={(e)=>setEmail(e.target.value)} placeholder="Email" className="w-full p-3 bg-zinc-900 border border-zinc-700 rounded-lg text-white" />
         <input type="password" value={password} onChange={(e)=>setPassword(e.target.value)} placeholder="Password" className="w-full p-3 bg-zinc-900 border border-zinc-700 rounded-lg text-white" />
-        <div className="flex justify-end">
-          <a href="/forgot-password" className="text-sm text-[#00FF88] hover:underline">Forgot password?</a>
-        </div>
         {err && <p className="text-sm text-red-400">{err}</p>}
         <button onClick={handleSignIn} disabled={loading} className="w-full p-3 bg-[#39FF14] text-black font-bold rounded-lg">
           {loading ? "Signing in..." : "Sign In"}
         </button>
-        <p className="text-center text-sm text-zinc-400">No account? <a href={`/signup?next=${next}`} className="text-[#00FF88]">Sign up</a></p>
       </div>
     </div>
+  )
+}
+
+export default function SignInPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-black" />}>
+      <SignInForm />
+    </Suspense>
   )
 }
