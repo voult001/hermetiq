@@ -35,7 +35,19 @@ export default function HostPage() {
           <HostPanel />
           <HostDashboard />
         </div>
-      </div>
-    </main>
+             </div>
+
+        {/* Patent Footer - Added */}
+        <div className="mt-10 flex w-full max-w-6xl flex-col items-center gap-2">
+          <div className="rounded-full border border-[#00FF88]/25 bg-[#00FF88]/10 px-4 py-1.5">
+            <span className="font-mono text-[11px] md:text-xs text-[#00FF88]">
+              U.S. Pat. App. No. 64/153,968 — Patent Pending
+            </span>
+          </div>
+          <span className="font-mono text-[10px] text-white/40">
+            © 2026 VAULTBNB — All Rights Reserved
+          </span>
+        </div>
+      </main>
   )
 }
