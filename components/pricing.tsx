@@ -1,31 +1,29 @@
-"use client"
-import { useState } from "react"
-export default function Pricing(){
-  const [loading,setLoading]=useState("")
-  async function goStripe(plan:string){
-    setLoading(plan)
-    try{
-      const r=await fetch("/api/checkout",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({plan})})
-      const d=await r.json()
-      if(d?.url) window.location.href=d.url
-      else alert(d?.error)
-    }catch{alert("API not ready")}
-    setLoading("")
-  }
-  return(
-    <section className="w-full bg-[#070a07] py-20 px-6">
-      <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-8">
-        <div className="rounded-[20px] bg-[#111a11] border border-[#39ff6a] p-8">
-          <h3 className="text-white font-bold text-xl">Hosts</h3>
-          <p className="text-white font-mono text-3xl font-bold mt-6">50GB - 2TB</p>
-          <button onClick={()=>goStripe("host")} className="mt-8 w-full h-12 rounded-full bg-[#39ff6a] text-black font-bold">{loading==="host"?"Loading...":"Become a Host"}</button>
-        </div>
-        <div className="rounded-[20px] bg-[#111] border border-white/15 p-8">
-          <h3 className="text-white font-bold text-xl">Guests</h3>
-          <p className="text-white font-mono text-3xl font-bold mt-6">Pay As You Go</p>
-          <button onClick={()=>goStripe("guest")} className="mt-8 w-full h-12 rounded-full bg-white text-black font-bold">{loading==="guest"?"Loading...":"Start Storing"}</button>
-        </div>
-      </div>
-    </section>
-  )
-}
+<div className="grid md:grid-cols-2 gap-6 max-w-6xl mx-auto">
+  {/* HOSTS */}
+  <div className="bg-[#0a0a0a] border border-white/10 rounded-xl p-8">
+    <p className="text-xs text-white/50 tracking-widest">Hosts • EARN PASSIVE INCOME</p>
+    <h3 className="text-2xl font-bold mt-2">Earnings 50GB - 2TB</h3>
+    <ul className="mt-6 space-y-3">
+      <li className="flex gap-2"><span className="text-[#00ff88]">✓</span> Launch your storage business in 1 click</li>
+      <li className="flex gap-2"><span className="text-[#00ff88]">✓</span> Earn recurring passive income monthly</li>
+      <li className="flex gap-2"><span className="text-[#00ff88]">✓</span> Scale & grow as a VaultBNB Partner</li>
+    </ul>
+    <button className="mt-8 w-full bg-[#00ff88] text-black font-bold py-3 rounded-lg">
+      Become a Host
+    </button>
+  </div>
+
+  {/* GUESTS */}
+  <div className="bg-[#0a0a0a] border border-white/10 rounded-xl p-8">
+    <p className="text-xs text-white/50 tracking-widest">Guests • SECURE & CHEAPER</p>
+    <h3 className="text-2xl font-bold mt-2">Storage 50GB - 2TB</h3>
+    <ul className="mt-6 space-y-3">
+      <li className="flex gap-2"><span className="text-[#00ff88]">✓</span> Military-grade AES-256 end-to-end encryption</li>
+      <li className="flex gap-2"><span className="text-[#00ff88]">✓</span> 50% Less than S3, Dropbox & Google Drive</li>
+      <li className="flex gap-2"><span className="text-[#00ff88]">✓</span> Enterprise-grade redundancy & global availability</li>
+    </ul>
+    <button className="mt-8 w-full bg-[#00ff88] text-black font-bold py-3 rounded-lg">
+      Start Storing
+    </button>
+  </div>
+</div>
