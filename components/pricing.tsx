@@ -1,58 +1,44 @@
-import { Button } from "@/components/ui/button"
-import { Check, HardDrive, Database } from "lucide-react"
 import Link from "next/link"
+import { Check, Database, HardDrive } from "lucide-react"
+import { Button } from "@/components/ui/button"
 
 export function Pricing() {
   return (
-    <section className="mx-auto max-w-6xl px-5 py-20 md:py-28">
-      <div className="mb-14 text-center">
-        <span className="font-mono text-xs tracking-[0.25em] text-neon">// PRICING</span>
-        <h2 className="mt-4 text-balance text-3xl font-bold tracking-tight md:text-4xl">
-          Earn as a host. Pay less as a guest.
-        </h2>
-      </div>
+    <section className="mx-auto max-w-5xl px-6 py-16">
+      <div className="grid gap-8 md:grid-cols-2">
 
-      <div className="grid gap-6 lg:grid-cols-2">
         {/* Hosts */}
-        <div className="flex flex-col rounded-2xl border border-neon/30 bg-card p-8">
+        <div className="flex flex-col rounded-2xl border border-border bg-card p-8">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-neon/25 bg-neon-dim">
-              <HardDrive className="h-5 w-5 text-neon" aria-hidden="true" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-secondary">
+              <HardDrive className="h-5 w-5" aria-hidden="true" />
             </div>
             <div>
               <h3 className="text-xl font-semibold">Hosts</h3>
-              <p className="font-mono text-xs tracking-wider text-muted-foreground">Plug in and grow</p>
+              <p className="font-mono text-xs tracking-wider text-muted-foreground uppercase">Earn passive income</p>
             </div>
           </div>
 
-          <div className="mt-8 grid gap-4 sm:grid-cols-2">
-            <div className="rounded-xl border border-border bg-secondary/40 p-5">
-              <p className="font-mono text-sm text-muted-foreground">14TB+</p>
-              <p className="mt-2 font-mono text-3xl font-bold text-foreground">
-                $67<span className="text-base font-normal text-muted-foreground">/mo</span>
-              </p>
-            </div>
-            <div className="rounded-xl border border-border bg-secondary/40 p-5">
-              <p className="font-mono text-sm text-muted-foreground">Earning</p>
-              <p className="mt-2 font-mono text-3xl font-bold text-foreground">$120+</p>
-            </div>
+          <div className="mt-8 rounded-xl border border-border bg-secondary/40 p-5">
+            <p className="font-mono text-sm text-muted-foreground">Earnings</p>
+            <p className="mt-2 font-mono text-3xl font-bold">$10 / TB / mo</p>
+            <p className="mt-1 font-mono text-xs text-muted-foreground">70% revenue share</p>
           </div>
 
           <ul className="mt-8 space-y-3">
-            <li className="flex items-center gap-2 font-mono text-sm"><Check className="h-4 w-4 text-neon" /> Turn spare space into income</li>
-            <li className="flex items-center gap-2 font-mono text-sm"><Check className="h-4 w-4 text-neon" /> Automated payouts</li>
-            <li className="flex items-center gap-2 font-mono text-sm"><Check className="h-4 w-4 text-neon" /> Zero maintenance</li>
+            <li className="flex items-center gap-2 font-mono text-sm"><Check className="h-4 w-4" /> One-click vault setup</li>
+            <li className="flex items-center gap-2 font-mono text-sm"><Check className="h-4 w-4" /> Automated payouts</li>
+            <li className="flex items-center gap-2 font-mono text-sm"><Check className="h-4 w-4" /> Enterprise-grade security</li>
           </ul>
 
-          {/* THIS IS THE BAR YOU WANTED - NOW REDIRECTS TO SIGN IN */}
-          <Link href="/signin?next=/host" className="mt-auto pt-8 block">
-            <Button className="w-full bg-[#39FF14] text-black hover:bg-[#32e612] font-mono text-[13px] py-6 rounded-[12px]">
+          <Link href="/host" className="mt-auto pt-8 block">
+            <Button className="w-full font-mono text-[13px] py-6 rounded-[12px]">
               Become a Host
             </Button>
           </Link>
         </div>
 
-        {/* Guests */}
+        {/* Guests - OPTION C FINAL PRO */}
         <div className="flex flex-col rounded-2xl border border-border bg-card p-8">
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-secondary">
@@ -60,20 +46,20 @@ export function Pricing() {
             </div>
             <div>
               <h3 className="text-xl font-semibold">Guests</h3>
-              <p className="font-mono text-xs tracking-wider text-muted-foreground">Secure & cheaper</p>
+              <p className="font-mono text-xs tracking-wider text-muted-foreground uppercase">Secure & cheaper</p>
             </div>
           </div>
 
           <div className="mt-8 rounded-xl border border-border bg-secondary/40 p-5">
             <p className="font-mono text-sm text-muted-foreground">Storage</p>
-            <p className="mt-2 font-mono text-3xl font-bold">50GB - 2TB slider</p>
+            <p className="mt-2 font-mono text-3xl font-bold">50GB - 2TB</p>
             <p className="mt-1 font-mono text-xs text-muted-foreground">50% cheaper than S3</p>
           </div>
 
-          <li className="flex items-center gap-2 font-mono text-sm"><Check className="h-4 w-4" /> Military-grade AES-256 end-to-end encryption</li>
-<li className="flex items-center gap-2 font-mono text-sm"><Check className="h-4 w-4" /> 50% less than S3, Dropbox & Google Drive</li>
-<li className="flex items-center gap-2 font-mono text-sm"><Check className="h-4 w-4" /> Enterprise-grade redundancy & global availability</li>
-            <li className="flex items-center gap-2 font-mono text-sm"><Check className="h-4 w-4" /> Pay as you grow</li>
+          <ul className="mt-8 space-y-3">
+            <li className="flex items-center gap-2 font-mono text-sm"><Check className="h-4 w-4" /> Military-grade AES-256 end-to-end encryption</li>
+            <li className="flex items-center gap-2 font-mono text-sm"><Check className="h-4 w-4" /> 50% less than S3, Dropbox & Google Drive</li>
+            <li className="flex items-center gap-2 font-mono text-sm"><Check className="h-4 w-4" /> Enterprise-grade redundancy & global availability</li>
           </ul>
 
           <Link href="/signin?next=/store" className="mt-auto pt-8 block">
@@ -82,6 +68,7 @@ export function Pricing() {
             </Button>
           </Link>
         </div>
+
       </div>
     </section>
   )
