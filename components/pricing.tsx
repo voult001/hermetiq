@@ -1,31 +1,31 @@
-import { NextRequest, NextResponse } from "next/server"
-import Stripe from "stripe"
-
-export async function POST(req: NextRequest) {
-  try {
-    const key = process.env.STRIPE_SECRET_KEY
-    if (!key) return NextResponse.json({ error: "STRIPE_SECRET_KEY missing in Vercel env" }, { status: 500 })
-
-    const stripe = new Stripe(key, { apiversion: "2024-06-20" as any })
-    const { plan } = await req.json()
-    const isHost = plan === "host"
-
-    const session = await stripe.checkout.sessions.create({
-      mode: "subscription",
-      line_items: [{
-        price_data: {
-          currency: "usd",
-          product_data: { name: isHost? "Vaultbnb Host License" : "Vaultbnb Storage 50GB" },
-          unit_amount: isHost? 999 : 50,
-          recurring: { interval: "month" }
-        },
-        quantity: 1
-      }],
-      success_url: "https://vaultbnb.com/success",
-      cancel_url: "https://vaultbnb.com/",
-    })
-    return NextResponse.json({ url: session.url })
-  } catch (e: any) {
-    return NextResponse.json({ error: e.message }, { status: 500 })
+"use client"
+import { useState } from "react"
+export default function Pricing(){
+  const [loading,setLoading]=useState("")
+  async function goStripe(plan:string){
+    setLoading(plan)
+    try{
+      const r=await fetch("/api/checkout",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({plan})})
+      const d=await r.json()
+      if(d?.url) window.location.href=d.url
+      else alert(d?.error)
+    }catch{alert("API not ready")}
+    setLoading("")
   }
+  return(
+    <section className="w-full bg-[#070a07] py-20 px-6">
+      <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-8">
+        <div className="rounded-[20px] bg-[#111a11] border border-[#39ff6a] p-8">
+          <h3 className="text-white font-bold text-xl">Hosts</h3>
+          <p className="text-white font-mono text-3xl font-bold mt-6">50GB - 2TB</p>
+          <button onClick={()=>goStripe("host")} className="mt-8 w-full h-12 rounded-full bg-[#39ff6a] text-black font-bold">{loading==="host"?"Loading...":"Become a Host"}</button>
+        </div>
+        <div className="rounded-[20px] bg-[#111] border border-white/15 p-8">
+          <h3 className="text-white font-bold text-xl">Guests</h3>
+          <p className="text-white font-mono text-3xl font-bold mt-6">Pay As You Go</p>
+          <button onClick={()=>goStripe("guest")} className="mt-8 w-full h-12 rounded-full bg-white text-black font-bold">{loading==="guest"?"Loading...":"Start Storing"}</button>
+        </div>
+      </div>
+    </section>
+  )
 }
