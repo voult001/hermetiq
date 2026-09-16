@@ -70,9 +70,9 @@ export function Pricing() {
             <p className="mt-1 font-mono text-xs text-muted-foreground">50% cheaper than S3</p>
           </div>
 
-          <ul className="mt-8 space-y-3">
-            <li className="flex items-center gap-2 font-mono text-sm"><Check className="h-4 w-4" /> Encrypted sharding</li>
-            <li className="flex items-center gap-2 font-mono text-sm"><Check className="h-4 w-4" /> Nearest vaults</li>
+          <li className="flex items-center gap-2 font-mono text-sm"><Check className="h-4 w-4" /> Military-grade AES-256 end-to-end encryption</li>
+<li className="flex items-center gap-2 font-mono text-sm"><Check className="h-4 w-4" /> 50% less than S3, Dropbox & Google Drive</li>
+<li className="flex items-center gap-2 font-mono text-sm"><Check className="h-4 w-4" /> Enterprise-grade redundancy & global availability</li>
             <li className="flex items-center gap-2 font-mono text-sm"><Check className="h-4 w-4" /> Pay as you grow</li>
           </ul>
 
