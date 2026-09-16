@@ -20,9 +20,9 @@ export function HostDashboard() {
   useEffect(() => {
     async function fetchTotal() {
       const supabase = createClient()
-      const { data } = await supabase.from("hosts").select('"freeGB"')
+      const { data } = await supabase.from("hosts").select("*")
       if (data) {
-        const sum = data.reduce((acc: number, row: any) => acc + Number(row.freeGB || 0), 0)
+        const sum = data.reduce((acc: number, row: any) => acc + Number(row.freeGB || row.free_gb || 0), 0)
         setTotalGB(sum)
       }
     }
@@ -40,25 +40,19 @@ export function HostDashboard() {
     <div className="flex h-full flex-col border-l border-white/10 bg-white/[0.02] p-6">
       <Tabs defaultValue="overview" className="flex h-full flex-col">
         <TabsList className="w-full justify-start gap-1 bg-transparent p-0">
-          {["overview", "chunks", "earnings"].map((t) => (
-            <TabsTrigger
-              key={t}
-              value={t}
-              className="rounded-md font-mono text-xs capitalize tracking-wide text-white/50 data-[state=active]:bg-[#00ff88]/10 data-[state=active]:text-[#00ff88]"
-            >
-              {t}
-            </TabsTrigger>
-          ))}
+          <TabsTrigger value="overview" className="rounded-md font-mono text-xs capitalize text-white/50 data-[state=active]:bg-[#00ff88]/10 data-[state=active]:text-[#00ff88]">overview</TabsTrigger>
+          <TabsTrigger value="chunks" className="rounded-md font-mono text-xs capitalize text-white/50 data-[state=active]:bg-[#00ff88]/10 data-[state=active]:text-[#00ff88]">chunks</TabsTrigger>
+          <TabsTrigger value="earnings" className="rounded-md font-mono text-xs capitalize text-white/50 data-[state=active]:bg-[#00ff88]/10 data-[state=active]:text-[#00ff88]">earnings</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="overview" className="flex-1 mt-6">
-          <div className="grid grid-cols-2 gap-4 mb-6">
+        <TabsContent value="overview" className="flex-1 mt-6 space-y-6">
+          <div className="grid grid-cols-2 gap-4">
             {STATS.map((s, i) => (
-              <div key={i} className="rounded-lg border border-white/10 p-4">
+              <motion.div key={i} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="rounded-xl border border-white/10 bg-white/5 p-4">
                 <s.icon className="h-4 w-4 mb-2 opacity-60" />
-                <div className="text-lg font-bold">{s.value}</div>
+                <div className="text-lg font-bold tracking-tight">{s.value}</div>
                 <div className="text-xs opacity-50">{s.label}</div>
-              </div>
+              </motion.div>
             ))}
           </div>
           <LiveFeed />
@@ -68,9 +62,10 @@ export function HostDashboard() {
         <TabsContent value="chunks" className="flex-1 mt-6">
           <div className="grid grid-cols-8 gap-2">
             {CHUNKS.map((c) => (
-              <div key={c.id} className={`h-3 rounded-sm ${c.active ? "bg-[#00ff88]" : "bg-white/10"}`} />
+              <div key={c.id} className={`h-6 rounded-sm transition-colors ${c.active ? "bg-[#00ff88]" : "bg-white/10"}`} />
             ))}
           </div>
+          <p className="mt-4 font-mono text-xs text-white/40">{totalGB} GB total shared across network</p>
         </TabsContent>
 
         <TabsContent value="earnings" className="flex-1 mt-6">
