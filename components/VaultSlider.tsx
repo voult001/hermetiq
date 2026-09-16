@@ -2,7 +2,7 @@
 import { useState, useMemo } from "react"
 
 export function VaultSlider() {
-  const [gb, setGb] = useState(500)
+  const [gb, setGb] = useState(50)
 
   const label = useMemo(() => {
     return gb >= 1000? `${(gb/1000).toFixed(1)} TB` : `${gb} GB`
