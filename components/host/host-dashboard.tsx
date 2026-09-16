@@ -8,7 +8,7 @@ export function HostDashboard() {
   useEffect(() => {
     async function load() {
       const supabase = createClient()
-      const { data } = await supabase.from("hosts").select("*")
+      const { data } = await supabase.from("hosts").select('*')
       if (data) {
         let sum = 0
         for (const r of data) {
