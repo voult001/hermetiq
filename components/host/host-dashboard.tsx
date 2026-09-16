@@ -30,7 +30,7 @@ export function HostDashboard() {
   }, [])
 
   const STATS = [
-    { icon: HardDrive, value: `${(totalGB / 1000).toFixed(1)} TB`, label: "Shared" },
+    { icon: HardDrive, value: (totalGB / 1000).toFixed(1) + " TB", label: "Shared" },
     { icon: Activity, value: "99.2%", label: "Uptime" },
     { icon: Star, value: "5.0", label: "Rating" },
     { icon: Handshake, value: "3", label: "Active Deals" },
@@ -62,7 +62,7 @@ export function HostDashboard() {
         <TabsContent value="chunks" className="flex-1 mt-6">
           <div className="grid grid-cols-8 gap-2">
             {CHUNKS.map((c) => (
-              <div key={c.id} className={`h-6 rounded-sm transition-colors ${c.active ? "bg-[#00ff88]" : "bg-white/10"}`} />
+              <div key={c.id} className={"h-6 rounded-sm " + (c.active ? "bg-[#00ff88]" : "bg-white/10")} />
             ))}
           </div>
           <p className="mt-4 font-mono text-xs text-white/40">{totalGB} GB total shared across network</p>
