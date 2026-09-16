@@ -42,7 +42,7 @@ export function VaultSlider() {
       </div>
 
       <div className="mt-6 flex gap-2">
-        {[250, 500, 1000, 2000].map(v => (
+        {[50, 500, 1000, 2000].map(v => (
           <button
             key={v}
             onClick={() => setGb(v)}
