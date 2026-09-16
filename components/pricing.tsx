@@ -66,7 +66,7 @@ export function Pricing() {
 
           <div className="mt-8 rounded-xl border border-border bg-secondary/40 p-5">
             <p className="font-mono text-sm text-muted-foreground">Storage</p>
-            <p className="mt-2 font-mono text-3xl font-bold">250GB - 2TB slider</p>
+            <p className="mt-2 font-mono text-3xl font-bold">50GB - 2TB slider</p>
             <p className="mt-1 font-mono text-xs text-muted-foreground">50% cheaper than S3</p>
           </div>
 
