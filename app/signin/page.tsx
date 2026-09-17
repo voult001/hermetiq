@@ -1,97 +1,35 @@
-"use client" // eye fix
-import { useState, Suspense } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
-import { supabase } from "@/lib/supabase"
+"use client"
+import { useState } from "react"
 import { Eye, EyeOff } from "lucide-react"
 
-function SignInForm() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+export default function SignUpPage(){
   const [showPassword, setShowPassword] = useState(false)
-  const [err, setErr] = useState("")
-  const [loading, setLoading] = useState(false)
-  const [resetSent, setResetSent] = useState(false)
-  const router = useRouter()
-  const searchParams = useSearchParams()
-  const next = searchParams.get("next") || "/store"
-
-  async function handleSignIn() {
-    setErr("")
-    setResetSent(false)
-    setLoading(true)
-    const { error } = await supabase.auth.signInWithPassword({ email, password })
-    setLoading(false)
-    if (error) {
-      setErr(error.message)
-      return
-    }
-    router.push(next)
-  }
-
-  async function handleForgot() {
-    if (!email) {
-      setErr("Enter your email first to recover password")
-      return
-    }
-    setErr("")
-    setResetSent(false)
-    const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/reset-password`
-    })
-    if (error) setErr(error.message)
-    else setResetSent(true)
-  }
+  const [showConfirm, setShowConfirm] = useState(false)
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black text-white p-4">
-      <div className="w-full max-w-md space-y-4">
-        <h1 className="text-2xl font-bold">Welcome back</h1>
-        
-        <input 
-          value={email} 
-          onChange={(e)=>setEmail(e.target.value)} 
-          placeholder="Email" 
-          className="w-full p-3 bg-zinc-900 border border-zinc-700 rounded-lg text-white" 
-        />
-        
-        <div className="relative">
-          <input 
-            type={showPassword ? "text" : "password"} 
-            value={password} 
-            onChange={(e)=>setPassword(e.target.value)} 
-            placeholder="Password" 
-            className="w-full p-3 pr-12 bg-zinc-900 border border-zinc-700 rounded-lg text-white" 
-          />
-          <button 
-            type="button" 
-            onClick={()=>setShowPassword(!showPassword)} 
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white z-10 p-1"
-          >
+    <div className="min-h-screen bg-black flex items-center justify-center p-4">
+      <div className="w-full max-w-sm bg-[#1a2e1a]/50 backdrop-blur border border-[#39FF14]/20 rounded-2xl p-6">
+        <h2 className="text-white text-xl font-bold">Create account</h2>
+        <p className="text-zinc-400 text-sm mb-6">Join your vault</p>
+
+        <input placeholder="Email" className="w-full p-3 mb-3 bg-zinc-900 border border-zinc-700 rounded-lg text-white" />
+
+        <div className="relative mb-3">
+          <input type={showPassword ? "text" : "password"} placeholder="Password" className="w-full p-3 pr-12 bg-zinc-900 border border-zinc-700 rounded-lg text-white" />
+          <button type="button" onClick={()=>setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400">
             {showPassword ? <EyeOff className="w-5 h-5"/> : <Eye className="w-5 h-5"/>}
           </button>
         </div>
 
-        <div className="flex justify-end">
-          <button onClick={handleForgot} type="button" className="text-sm text-zinc-400 hover:text-[#39FF14] underline">
-            Forgot password?
+        <div className="relative mb-4">
+          <input type={showConfirm ? "text" : "password"} placeholder="Confirm password" className="w-full p-3 pr-12 bg-zinc-900 border border-zinc-700 rounded-lg text-white" />
+          <button type="button" onClick={()=>setShowConfirm(!showConfirm)} className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400">
+            {showConfirm ? <EyeOff className="w-5 h-5"/> : <Eye className="w-5 h-5"/>}
           </button>
         </div>
 
-        {err && <p className="text-sm text-red-400">{err}</p>}
-        {resetSent && <p className="text-sm text-[#39FF14]">Recovery email sent to {email}</p>}
-        
-        <button onClick={handleSignIn} disabled={loading} className="w-full p-3 bg-[#39FF14] text-black font-bold rounded-lg">
-          {loading ? "Signing in..." : "Sign In"}
-        </button>
+        <button className="w-full p-3 bg-[#39FF14] text-black font-bold rounded-lg">Sign Up</button>
       </div>
     </div>
-  )
-}
-
-export default function SignInPage() {
-  return (
-    <Suspense fallback={<div className="min-h-screen bg-black flex items-center justify-center text-white">Loading...</div>}>
-      <SignInForm />
-    </Suspense>
   )
 }
