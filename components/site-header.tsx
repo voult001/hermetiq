@@ -6,7 +6,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-black/50 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
         <Link href="/" className="font-mono font-bold text-[#39FF14] tracking-widest">
-          VAULTBNB
+          SIGILLUQ
         </Link>
         
         <div className="flex items-center gap-3">
