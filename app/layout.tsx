@@ -14,7 +14,7 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'VAULTBNB — 616TB Encrypted & Blind Storage',
+  title: 'SIGILLUQ — 616TB Encrypted & Blind Storage',
   description:
     'Rent your spare drive and earn, or store up to 500TB at $0.005/GB. Zero-knowledge, client-side AES-256-GCM encrypted vaults. Patent Pending.',
   generator: 'v0.app',
