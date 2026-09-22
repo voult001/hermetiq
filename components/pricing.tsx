@@ -11,7 +11,7 @@ export default function Pricing() {
           <ul className="mt-6 space-y-3 text-white/80 text-sm">
             <li className="flex gap-2"><span className="text-[#00ff88]">✓</span> Launch your storage business in 1 click</li>
             <li className="flex gap-2"><span className="text-[#00ff88]">✓</span> Earn recurring passive income monthly</li>
-            <li className="flex gap-2"><span className="text-[#00ff88]">✓</span> Scale & grow as a VaultBNB Partner</li>
+            <li className="flex gap-2"><span className="text-[#00ff88]">✓</span> Scale & grow as a SIGILLUQ Partner</li>
           </ul>
           <button className="mt-8 w-full bg-[#00ff88] text-black font-bold py-3.5 rounded-lg hover:bg-[#00e67a] transition">
             Become a Host

@@ -8,12 +8,12 @@ export function SiteFooter() {
           <div className="flex h-7 w-7 items-center justify-center rounded-md border border-neon/20">
             <Lock className="h-3.5 w-3.5 text-neon" aria-hidden="true" />
           </div>
-          <span className="font-mono text-sm font-bold tracking-widest">VAULTBNB</span>
+          <span className="font-mono text-sm font-bold tracking-widest">SIGILLUQ</span>
           <span className="font-mono text-xs tracking-wider text-muted-foreground">616TB · Encrypted</span>
         </div>
         <div className="flex items-center gap-6 font-mono text-xs tracking-wider text-muted-foreground">
           <span className="rounded-full border border-neon/25 bg-neon-dim px-3 py-1 text-neon">U.S. Pat. App. No. 64/153,968 — Patent Pending</span>
-          <span>© 2026 VAULTBNB — All Rights Reserved</span>
+          <span>© 2026 SIGILLUQ — All Rights Reserved</span>
         </div>
       </div>
     </footer>

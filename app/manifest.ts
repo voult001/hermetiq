@@ -3,7 +3,7 @@ import { MetadataRoute } from 'next'
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: 'VaultBnB Host - Earn $500/TB/year',
-    short_name: 'VAULTBNB HOST',
+    short_name: 'SIGILLUQ HOST',
     description: 'Rent your spare drive. Encrypted host dashboard.',
     start_url: '/host',
     display: 'standalone',

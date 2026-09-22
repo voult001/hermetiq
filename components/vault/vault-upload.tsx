@@ -22,7 +22,7 @@ export default function VaultUpload() {
 
   return (
     <div className="w-full max-w-2xl mx-auto bg-black border border-lime-400/20 rounded-2xl p-8 text-white">
-      <h2 className="text-2xl font-bold text-lime-400">VAULTBNB VAULT</h2>
+      <h2 className="text-2xl font-bold text-lime-400">SIGILLUQ VAULT</h2>
       <p className="text-sm text-gray-400 mt-1">Military-grade encryption. Distributed across 616TB network.</p>
 
       <div className="mt-6 border-2 border-dashed border-lime-400/30 rounded-xl p-8 text-center hover:border-lime-400 transition">

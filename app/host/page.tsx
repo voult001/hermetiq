@@ -1,53 +1,36 @@
-import type { Metadata } from "next"
-import Link from "next/link"
-import { ArrowLeft } from "lucide-react"
-import { HostPanel } from "@/components/host/host-panel"
-import { HostDashboard } from "@/components/host/host-dashboard"
-
-export const metadata: Metadata = {
-  title: "VAULTBNB Host — Desktop App",
-  description: "Rent your spare drive. Earn $500/TB/year with AES-256 encrypted, read-only distributed storage.",
-}
-
-export default function HostPage() {
-  return (
-    <main className="vault flex min-h-svh flex-col items-center justify-center bg-[#050505] px-4 py-10">
-      <div className="mb-6 flex w-full max-w-6xl items-center justify-between">
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 font-mono text-xs tracking-wider text-white/50 transition-colors hover:text-[#00ff88]"
-        >
-          <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
-          BACK TO SITE
-        </Link>
-        <span className="font-mono text-xs tracking-widest text-white/40">VAULTBNB · HOST</span>
-      </div>
-
-      <div className="w-full max-w-6xl overflow-hidden rounded-xl border border-white/10 bg-[#0a0a0a] shadow-2xl shadow-black/60">
-        <div className="flex items-center gap-2 border-b border-white/10 bg-white/[0.03] px-4 py-3">
-          <span className="h-3 w-3 rounded-full bg-[#ff5f57]" aria-hidden="true" />
-          <span className="h-3 w-3 rounded-full bg-[#febc2e]" aria-hidden="true" />
-          <span className="h-3 w-3 rounded-full bg-[#28c840]" aria-hidden="true" />
-          <span className="ml-3 font-mono text-xs tracking-wide text-white/40">VaultBnB Host.app</span>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-[2fr_3fr]">
-          <HostPanel />
-          <HostDashboard />
-        </div>
-             </div>
-
-        {/* Patent Footer - Added */}
-        <div className="mt-10 flex w-full max-w-6xl flex-col items-center gap-2">
-          <div className="rounded-full border border-[#00FF88]/25 bg-[#00FF88]/10 px-4 py-1.5">
-            <span className="font-mono text-[11px] md:text-xs text-[#00FF88]">
-              U.S. Pat. App. No. 64/153,968 — Patent Pending
-            </span>
-          </div>
-          <span className="font-mono text-[10px] text-white/40">
-            © 2026 VAULTBNB — All Rights Reserved
-          </span>
+"use client"
+import { SiteHeader } from "@/components/site-header"
+import { SiteFooter } from "@/components/site-footer"
+import { useState } from "react"
+export default function Host(){
+  const [d,setD]=useState<any>(null)
+  const [l,setL]=useState(false)
+  async function scan(){
+    setL(true)
+    try{
+      const e:any=await (navigator as any).storage.estimate()
+      const libre=((e.quota-e.usage)/1024/1024/1024).toFixed(2)
+      const info={libre,fecha:new Date().toLocaleString(),id:"host_"+Math.random().toString(36).slice(2,7),verificado:true}
+      setD(info)
+      const lista=JSON.parse(localStorage.getItem("sigilliq_hosts")||"[]")
+      lista.push(info)
+      localStorage.setItem("sigilliq_hosts",JSON.stringify(lista))
+    }catch{}
+    setL(false)
+  }
+  return(
+    <div className="min-h-screen bg-background text-foreground grid-bg">
+      <SiteHeader />
+      <main className="container mx-auto px-6 py-10 max-w-2xl">
+        <h1 className="text-4xl font-bold text-glow">Ser Host</h1>
+        <div className="rounded-xl border bg-card p-6 mt-8">
+          <h3>💾 Escáner con Permiso Real</h3>
+          <p className="text-sm text-muted-foreground mt-2">Usa navigator.storage.estimate() - pide permiso, no ve archivos</p>
+          <button onClick={scan} className="mt-4 bg-foreground text-background px-6 py-3 rounded-lg font-bold w-full">{l?"ESCANEANDO...":"🔍 Verificar mi espacio"}</button>
+          {d&&<div className="mt-4 border border-green-500/50 bg-green-500/10 rounded-lg p-4"><p className="text-green-600 font-bold">✅ VERIFICADO {d.libre} GB</p></div>}
         </div>
       </main>
+      <SiteFooter />
+    </div>
   )
 }

@@ -5,7 +5,7 @@ export default function StorePage() {
   return (
     <div className="min-h-screen bg-[#0A0F0A] text-white">
       <header className="flex items-center justify-between px-[34px] py-[21px] border-b border-white/10">
-        <Link href="/" className="font-mono text-[13px] tracking-[0.2em]">VAULTBNB <span className="text-[#39FF14]">STORE</span></Link>
+        <Link href="/" className="font-mono text-[13px] tracking-[0.2em]">SIGILLUQ <span className="text-[#39FF14]">STORE</span></Link>
         <div className="flex items-center gap-[21px]">
           <Link href="/host" className="font-mono text-[13px] opacity-60">Become a Host</Link>
           <Link href="/signup" className="bg-[#39FF14] text-black px-[21px] py-[8px] rounded-full font-mono text-[13px] font-bold">Sign Up</Link>
