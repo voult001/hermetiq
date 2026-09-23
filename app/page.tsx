@@ -1,22 +1,22 @@
 "use client"
-import SiteHeader from "@/components/site-header"
-import Hero from "@/components/hero"
-import FeatureCards from "@/components/feature-cards"
-import TrustBadge from "@/components/trust-badge"
+import { SiteHeader } from "@/components/site-header"
+import { Hero } from "@/components/hero"
+import { FeatureCards } from "@/components/feature-cards"
+import { TrustBadge } from "@/components/trust-badge"
 import Pricing from "@/components/pricing"
-import SiteFooter from "@/components/site-footer"
+import { SiteFooter } from "@/components/site-footer"
 import ParallelNetwork from "@/components/parallel-network"
 
 export default function Page() {
   return (
-    <div className="min-h-screen bg-black text-white">
+    <main className="min-h-screen bg-black text-white">
       <SiteHeader />
       <Hero />
       <FeatureCards />
-      <div className="hidden"><ParallelNetwork /></div>
       <TrustBadge />
       <Pricing />
+      <ParallelNetwork />
       <SiteFooter />
-    </div>
+    </main>
   )
 }
