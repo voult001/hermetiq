@@ -6,20 +6,22 @@ import TrustBadge from "@/components/TrustBadge";
 import Pricing from "@/components/Pricing";
 import SiteFooter from "@/components/SiteFooter";
 
-// Esto es lo pesado, lo cargamos solo cuando el usuario hace scroll
-// Así tu página inicial carga en 0.3s no en 3s
+// Carga pesada solo cuando hace falta - así tu landing carga en 0.3s
 const FeatureCards = dynamic(() => import("@/components/FeatureCards"), {
-  loading: () => <div className='h-40 animate-pulse bg-zinc-900' />,
-  ssr: false // Este es tu sistema Airbnb+Uber, no necesita SEO
+  loading: () => <div className="h-40 animate-pulse bg-zinc-900 rounded-xl" />,
+  ssr: false,
 });
 
-const ParallelNetwork = dynamic(() => import("@/components/parallel-network"), {
-  ssr: false
-});
+const ParallelNetwork = dynamic(
+  () => import("@/components/parallel-network"),
+  {
+    ssr: false,
+  }
+);
 
 export const metadata = {
   title: "SIGILLUQ | Airbnb de Datos + Uber Delivery",
-  description: "Rentamos espacio vacío a $0.80/TB. Entrega paralela 1.5x segura.",
+  description: "Rentamos espacio vacio a $0.80/TB. Entrega paralela 1.5x segura.",
 };
 
 export default function Page() {
@@ -27,12 +29,11 @@ export default function Page() {
     <div className="min-h-screen bg-black text-white">
       <SiteHeader />
       <Hero />
-      
-      {/* ESTE ES TU INVENTARIO INVISIBLE - No pide nada afuera */}
-      {/* El usuario solo ve tarjetitas bonitas, por dentro ya sabe cuántos hosts libres hay */}
+
+      {/* INVENTARIO INVISIBLE - No pide nada afuera */}
       <FeatureCards />
-      
-      {/* ESTO ES EL UBER - No se ve en la landing, solo cuando sube archivo */}
+
+      {/* UBER - No se ve en la landing, solo cuando sube archivo */}
       <div className="hidden">
         <ParallelNetwork />
       </div>
