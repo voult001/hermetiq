@@ -30,12 +30,12 @@ export default function DashboardPage() {
       {files.length === 0? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl">
           <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-8">
-            <p className="text-[11px] tracking-widest text-zinc-400 font-bold">HOSTS • EARN PASSIVE INCOME</p>
+            <p className="text-[11px] tracking-widest text-zinc-400 font-bold">HOSTS - EARN PASSIVE INCOME</p>
             <h2 className="text-2xl font-bold mt-3">Earnings 50GB - 2TB</h2>
             <button onClick={() => router.push('/host')} className="mt-8 bg-[#00FF66] text-black font-bold px-6 py-3 rounded-xl w-full">Become a Host</button>
           </div>
           <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-8">
-            <p className="text-[11px] tracking-widest text-zinc-400 font-bold">GUESTS • SECURE & CHEAPER</p>
+            <p className="text-[11px] tracking-widest text-zinc-400 font-bold">GUESTS - SECURE & CHEAPER</p>
             <h2 className="text-2xl font-bold mt-3">Storage 50GB - 2TB</h2>
             <button onClick={() => router.push('/store')} className="mt-8 bg-[#00FF66] text-black font-bold px-6 py-3 rounded-xl w-full">Start Storing</button>
           </div>
