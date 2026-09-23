@@ -2,36 +2,42 @@
 import { useEffect, useState } from "react"
 import { supabase } from "@/lib/supabase"
 import { useRouter } from "next/navigation"
-import VaultUpload from "@/components/vault/vault-upload"
 
-export default function Dashboard() {
-  const [user, setUser] = useState<any>(null)
+export default function DashboardPage() {
   const router = useRouter()
+  const [user, setUser] = useState<any>(null)
+  const [files, setFiles] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    supabase.auth.getUser().then(({ data }) => {
-      if (!data.user) router.push("/signin")
-      else setUser(data.user)
-    })
-  }, [])
+    async function checkUser() {
+      const { data } = await supabase.auth.getUser()
+      if (!data.user) {
+        router.push("/login")
+      } else {
+        setUser(data.user)
+        const { data: filesData } = await supabase.from('files').select('*').order('created_at', { ascending: false })
+        if (filesData) setFiles(filesData)
+      }
+      setLoading(false)
+    }
+    checkUser()
+  }, [router])
 
-  if (!user) return <div style={{padding:40}}>Loading...</div>
+  if (loading) return <div className="p-8">Loading...</div>
 
   return (
-    <div style={{padding:40, fontFamily:"monospace", background:"black", minHeight:"100vh", color:"white"}}>
-      <h1>Welcome! 👋</h1>
-      <p>Logged in as: {user.email}</p>
-      
-      <div style={{marginTop:30, maxWidth:600}}>
-        <VaultUpload />
+    <div className="p-8">
+      <h1 className="text-2xl font-bold mb-6">Vaultbnb Dashboard</h1>
+      <p className="mb-4">Bienvenido {user?.email}</p>
+      <div className="mt-8 grid gap-4">
+        {files.length === 0 && <p>No files yet</p>}
+        {files.map((f: any) => (
+          <div key={f.id} className="border p-4 rounded">
+            {f.name} - {f.size} bytes
+          </div>
+        ))}
       </div>
-
-      <button onClick={async () => {
-        await supabase.auth.signOut()
-        router.push("/")
-      }} style={{marginTop:40, padding:"10px 20px", background:"black", color:"lime", cursor:"pointer", border:"1px solid lime"}}>
-        Sign Out
-      </button>
     </div>
   )
 }
