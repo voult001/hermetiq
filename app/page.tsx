@@ -9,7 +9,7 @@ import SiteFooter from "@/components/SiteFooter";
 // Esto es lo pesado, lo cargamos solo cuando el usuario hace scroll
 // Así tu página inicial carga en 0.3s no en 3s
 const FeatureCards = dynamic(() => import("@/components/FeatureCards"), {
-  loading: () => <div className="h-40 animate-pulse bg-zinc-900" />,
+  loading: () => <div className='h-40 animate-pulse bg-zinc-900' />,
   ssr: false // Este es tu sistema Airbnb+Uber, no necesita SEO
 });
 
