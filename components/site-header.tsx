@@ -35,9 +35,7 @@ export function SiteHeader() {
         </Link>
 
         <div className="flex items-center gap-3">
-          <Link href="/host" className="font-mono text-sm opacity-70 hover:opacity-100">
-            Become a Host
-          </Link>
+          
 
           {user ? (
             <>
