@@ -4,12 +4,12 @@ import { Hero } from "@/components/hero"
 import { FeatureCards } from "@/components/feature-cards"
 import { TrustBadge } from "@/components/trust-badge"
 import Pricing from "@/components/pricing"
-import { SiteFooter } from "@/components/site-footer"
 import ParallelNetwork from "@/components/parallel-network"
+import { SiteFooter } from "@/components/site-footer"
 
 export default function Page() {
   return (
-    <main className="min-h-screen bg-black text-white">
+    <main className="min-h-screen bg-black">
       <SiteHeader />
       <Hero />
       <FeatureCards />
