@@ -1,4 +1,2 @@
 "use client";
-export default function ParallelNetwork() {
-  return null;
-}
+export default function ParallelNetwork() { return null; }
