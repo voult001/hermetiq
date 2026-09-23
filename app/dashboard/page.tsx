@@ -28,8 +28,8 @@ export default function DashboardPage() {
 
   return (
     <div className="p-8 bg-black min-h-screen text-white">
-      <h1 className="text-xl font-bold">Vaultbnb Dashboard</h1>
-      <p className="text-zinc-400 text-sm mt-1 mb-8">Bienvenido {user?.email}</p>
+     <h1 className="text-3xl font-bold">My Vault</h1>
+<p className="text-zinc-400 text-sm mt-1 mb-8">Welcome back, {user?.email}</p>
 
       {files.length === 0? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl">
