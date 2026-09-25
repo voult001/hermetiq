@@ -6,104 +6,112 @@ import { useRouter } from "next/navigation"
 export default function DashboardPage() {
   const router = useRouter()
   const [user, setUser] = useState<any>(null)
-  const [files, setFiles] = useState<any[]>([])
+  const [files, setFiles] = useState<any[]>([
+    { name: "Contract_2024.pdf", type: "PDF", size: "1.2MB", icon: "PDF", color: "bg-red-500" },
+    { name: "Financial_Q1.xlsx", type: "XLSX", size: "842KB", icon: "X", color: "bg-green-600" },
+    { name: "Customer_Data.csv", type: "CSV", size: "340KB", icon: "CSV", color: "bg-blue-500" },
+    { name: "Design_Specs.docx", type: "DOCX", size: "518KB", icon: "DOCX", color: "bg-blue-700" },
+    { name: "Onboarding_Notes.txt", type: "TXT", size: "12KB", icon: "TXT", color: "bg-zinc-500" },
+  ])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    async function checkUser() {
+    async function load() {
       const { data } = await supabase.auth.getUser()
       if (!data.user) { router.replace("/signin"); return }
       setUser(data.user)
-      const { data: f } = await supabase.from('files').select('*')
-      if (f) setFiles(f)
+      const { data: dbFiles } = await supabase.from('files').select('*')
+      if (dbFiles && dbFiles.length > 0) {
+        setFiles(dbFiles.map((f:any)=>({ name: f.file_name||f.name, type: f.type||"PDF", size: f.size||"—", icon: "PDF", color:"bg-red-500" })))
+      }
       setLoading(false)
     }
-    checkUser()
+    load()
   }, [router])
 
-  if (loading) return <div className="min-h-screen bg-[#050505] text-white p-10">Loading SIGILLUQ...</div>
+  if (loading) return <div className="min-h-screen bg-[#0A0A0A] text-white p-10">Loading SIGILLUQ...</div>
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white selection:bg-[#00FF88]/30">
-      {/* NAV PRO */}
-      <nav className="h-[72px] flex items-center justify-between px-8 border-b border-white/[0.06] bg-black/50 backdrop-blur-xl sticky top-0 z-50">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-[#00FF88] flex items-center justify-center font-black text-black">S</div>
-          <span className="font-bold tracking-[0.2em] text-[13px]">SIGILLUQ</span>
-          <span className="text-[10px] text-zinc-500 border border-white/10 rounded-full px-2 py-0.5 ml-3">616TB Encrypted</span>
+    <div className="min-h-screen bg-[#080808] text-white">
+      {/* TOP NAV - EXACTO A LA FOTO */}
+      <nav className="h-[56px] flex items-center justify-between px-6 border-b border-white/[0.08] bg-[#0F0F0F]">
+        <div className="flex items-center gap-8">
+          <div className="flex items-center gap-2 font-black text-[18px]"><span className="text-[#00FF88]">🛡️</span> SIGILLUQ</div>
+          <div className="hidden md:flex items-center gap-6 text-[12px] text-zinc-500">
+            <span className="flex items-center gap-1">◧ Dashboard</span>
+            <span className="text-white border-b-2 border-[#00FF88] pb-1">Vault</span>
+            <span>⬢ Storage</span>
+            <span>👥 Team</span>
+            <span>⚙ Settings</span>
+          </div>
         </div>
-        <div className="flex items-center gap-4 text-[12px]">
-          <span className="text-zinc-500">{user?.email}</span>
-          <div className="w-7 h-7 rounded-full bg-zinc-800"></div>
+        <div className="flex items-center gap-4">
+          <span className="text-zinc-600">🔔</span>
+          <div className="w-7 h-7 rounded-full bg-[#1A1A1A] border border-white/10 flex items-center justify-center text-[10px]">JD</div>
         </div>
       </nav>
 
-      <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] min-h-[calc(100vh-72px)]">
-        {/* LEFT - VAULT - BILLION DOLLAR */}
-        <div className="p-10 lg:p-14 border-r border-white/[0.06] bg-[radial-gradient(ellipse_at_top,_rgba(0,255,136,0.08),_transparent_60%)]">
-          <div className="max-w-[640px]">
-            <h1 className="text-[44px] font-[800] tracking-tight leading-[0.95]">Store Files - Encrypted <span className="text-[#00FF88]">$0.005/GB</span></h1>
-            <p className="text-zinc-400 text-[14px] mt-4 leading-relaxed">Military-grade encryption. Distributed across 625TB network. Pay only for what you use. Your files are sharded into 5 encrypted pieces.</p>
+      <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] min-h-[calc(100vh-56px)]">
+        {/* LEFT - MY VAULT - EXACTO A FOTO */}
+        <div className="p-6 lg:p-8 border-r border-white/[0.08] bg-[#0F0F0F]">
+          <h1 className="text-[26px] font-bold leading-none">My Vault</h1>
+          <p className="text-[12px] text-zinc-500 mt-2">Your secure files • 24 items • 2.1GB total</p>
 
-            <div className="mt-10 rounded-[24px] bg-white/[0.04] border border-white/[0.08] backdrop-blur-xl p-7 shadow-[0_20px_80px_rgba(0,0,0,0.5)]">
-              <div className="flex justify-between items-start">
-                <div>
-                  <p className="text-[10px] tracking-[0.2em] text-zinc-500 font-bold">STORAGE</p>
-                  <p className="text-[32px] font-bold mt-1">50GB</p>
-                </div>
-                <div className="text-right">
-                  <p className="text-[10px] tracking-[0.2em] text-zinc-500 font-bold">EST.</p>
-                  <p className="text-[14px] font-semibold mt-1 text-zinc-300">$0.40/mo</p>
-                </div>
-              </div>
-              <div className="flex gap-2 mt-6">
-                {["50GB","500GB","1TB","2TB"].map(s=>(
-                  <button key={s} className={`px-4 py-2 rounded-full text-[11px] font-bold transition ${s==="50GB"? 'bg-white text-black' : 'bg-white/[0.06] border border-white/[0.08] text-zinc-400 hover:bg-white/[0.1]'}`}>{s}</button>
-                ))}
-              </div>
-              <div className="mt-8 pt-6 border-t border-white/[0.06] flex justify-between text-[10px] text-zinc-500">
-                <span>U.S. Pat. App. No. 64/153,968 - Patent Pending</span>
-                <span>{files.length} files secured</span>
-              </div>
+          <div className="mt-5 flex items-center gap-2">
+            <div className="flex-1 h-[36px] rounded-lg bg-[#1A1A1A] border border-white/[0.08] flex items-center px-3 gap-2">
+              <span className="text-zinc-500 text-[13px]">⌕</span>
+              <input placeholder="Search files, folders, tags..." className="bg-transparent outline-none text-[12px] flex-1 placeholder:text-zinc-600" />
+              <button className="text-[10px] px-2 py-1 rounded bg-white/[0.06] border border-white/[0.08]">≣ Filters</button>
             </div>
           </div>
+
+          <div className="mt-4 rounded-lg overflow-hidden border border-white/[0.08] bg-[#1E1E1E]">
+            <div className="grid grid-cols-12 px-4 py-2.5 text-[10px] font-bold tracking-widest text-zinc-500 bg-[#2A2A2A] border-b border-white/[0.08]">
+              <div className="col-span-6">NAME</div><div className="col-span-2">TYPE</div><div className="col-span-2">SIZE</div><div className="col-span-2">STATUS</div>
+            </div>
+            {files.map((f:any, i:number)=>(
+              <div key={i} className="grid grid-cols-12 px-4 py-3 text-[12px] border-b border-white/[0.05] hover:bg-white/[0.04] items-center">
+                <div className="col-span-6 flex items-center gap-2 truncate">
+                  <div className={`w-6 h-6 rounded ${f.color} flex items-center justify-center text-[8px] font-black text-white`}>{f.icon}</div>
+                  <span className="font-medium">{f.name}</span>
+                </div>
+                <div className="col-span-2 text-zinc-400 text-[11px]">{f.type}</div>
+                <div className="col-span-2 text-zinc-400 text-[11px]">{f.size}</div>
+                <div className="col-span-2"><span className="px-2 py-1 rounded-full bg-[#00FF88]/20 text-[#00FF88] text-[9px] font-bold border border-[#00FF88]/20">● Secure</span></div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-3 text-[11px] text-zinc-600">Showing 5 of 24 files<br/><span className="tracking-widest">&lt; 1 2 3 &gt;</span></div>
         </div>
 
-        {/* RIGHT - UPLOAD - BILLION DOLLAR */}
-        <div className="p-10 lg:p-14 bg-[#0A0A0A] flex flex-col">
-          <div>
-            <h2 className="text-[22px] font-bold tracking-tight">Storage & Upload</h2>
-            <p className="text-[12px] text-zinc-500 mt-1">Cloud storage management • 10TB plan • End-to-end encrypted</p>
+        {/* RIGHT - STORAGE & UPLOAD - EXACTO A FOTO */}
+        <div className="p-6 lg:p-8 bg-[#121212] flex flex-col">
+          <div className="text-center">
+            <h2 className="text-[20px] font-bold">Storage & Upload</h2>
+            <p className="text-[11px] text-zinc-500 mt-1">Cloud storage management • 10TB plan</p>
           </div>
 
-          <div className="flex-1 flex flex-col items-center justify-center py-12">
-            {/* CIRCLE PRO - conic gradient */}
-            <div className="relative w-[200px] h-[200px]">
-              <div className="absolute inset-0 rounded-full" style={{background: `conic-gradient(#00FF88 62%, #1A1A1A 0)`}}></div>
-              <div className="absolute inset-[14px] rounded-full bg-[#0A0A0A]"></div>
+          <div className="flex flex-col items-center mt-8">
+            <div className="relative w-[150px] h-[150px]">
+              <div className="absolute inset-0 rounded-full border-[10px] border-[#1E1E1E]"></div>
+              <div className="absolute inset-0 rounded-full border-[10px] border-[#00FF88] border-l-transparent border-b-transparent rotate-45" style={{borderTopColor:"#00FF88", borderRightColor:"#00FF88"}}></div>
               <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span className="text-[48px] font-[800] tracking-tighter">62%</span>
-                <span className="text-[11px] text-zinc-500 font-medium">6.2TB / 10TB used</span>
-                <span className="mt-2 text-[10px] px-2 py-1 rounded-full bg-[#00FF88]/10 text-[#00FF88] border border-[#00FF88]/20">● Live</span>
+                <span className="text-[28px] font-[800] text-[#00FF88]">62%</span>
+                <span className="text-[9px] text-zinc-400">6.2TB / 10TB used</span>
               </div>
             </div>
-
-            {/* DRAG & DROP BILLION-DOLLAR */}
-            <label className="mt-12 w-full group relative rounded-[20px] border border-dashed border-white/15 bg-white/[0.02] hover:bg-white/[0.04] hover:border-[#00FF88]/50 p-10 text-center cursor-pointer transition-all duration-300">
-              <div className="absolute inset-0 rounded-[20px] bg-gradient-to-b from-[#00FF88]/[0.05] to-transparent opacity-0 group-hover:opacity-100 transition"></div>
-              <div className="relative">
-                <div className="w-10 h-10 mx-auto rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-center mb-4">☁️</div>
-                <p className="font-semibold text-[14px]">Drag & drop files here</p>
-                <p className="text-[11px] text-zinc-500 mt-2">or click to browse • PDF, XLSX, CSV, DOCX, TXT • Max 500MB per file</p>
-              </div>
-              <input type="file" className="hidden" multiple />
-            </label>
-
-            <button className="w-full mt-4 h-[52px] rounded-[14px] bg-[#00FF88] text-black font-bold text-[14px] tracking-wide hover:bg-[#00FF88]/90 transition shadow-[0_0_30px_rgba(0,255,136,0.3)]">
-              ↑ Upload Files
-            </button>
-            <p className="text-[10px] text-zinc-600 mt-4">Files are encrypted end-to-end • 🛡️ Retention: 90 days • Sharded x5</p>
+            <p className="text-[11px] text-zinc-500 mt-4">↗ 1.8TB available • Upgrade plan</p>
           </div>
+
+          <label className="mt-8 w-full rounded-xl border border-dashed border-[#00FF88]/30 bg-[#0A0A0A] p-6 text-center cursor-pointer hover:border-[#00FF88]/60 transition">
+            <div className="text-[#00FF88] text-xl">☁️</div>
+            <p className="font-bold text-[13px] mt-2">Drag & drop files here</p>
+            <p className="text-[10px] text-zinc-500 mt-2 leading-relaxed">or click to browse • Supports PDF, XLSX, CSV, DOCX, TXT<br/>• Max 500MB per file</p>
+            <input type="file" className="hidden" multiple />
+          </label>
+
+          <button className="w-full mt-3 h-[40px] rounded-lg bg-[#00FF88] text-black font-bold text-[13px] flex items-center justify-center gap-1">⇧ Upload Files</button>
+          <p className="text-[10px] text-zinc-600 mt-3 text-center">Files are encrypted end-to-end • 🛡️ Retention: 90 days</p>
         </div>
       </div>
     </div>
