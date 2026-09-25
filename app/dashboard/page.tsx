@@ -1,63 +1,55 @@
+// app/dashboard/page.tsx
 "use client"
-import { useEffect, useState } from "react"
-import { supabase } from "@/lib/supabase"
-import { useRouter } from "next/navigation"
+import { useState } from "react"
 
 export default function DashboardPage() {
-  const router = useRouter()
-  const [uploading, setUploading] = useState(false)
-
-  const files = [
-    { name: "Contract_2024.pdf", type: "PDF", size: "1.2MB", icon: "PDF", color: "bg-red-500" },
-    { name: "Financial_Q1.xlsx", type: "XLSX", size: "842KB", icon: "X", color: "bg-green-600" },
-  ]
-
-  useEffect(() => { supabase.auth.getUser().then(({data})=>{ if(!data.user) router.replace("/signin") }) }, [])
-
-  const handleUpload = async (fileList: FileList | null) => {
-    if(!fileList) return
-    setUploading(true)
-    // Tu motor original - no toco nada
-    setTimeout(()=>setUploading(false), 1500)
-  }
+  const [plan, setPlan] = useState("100GB")
 
   return (
-    <div className="min-h-screen bg-[#080808] text-white flex flex-col">
-      <nav className="h-[56px] flex items-center justify-between px-6 border-b border-white/[0.08] bg-[#0F0F0F]">
-        <div className="flex items-center gap-8"><div className="font-black">🛡️ SIGILLUQ</div><div className="flex gap-6 text-[12px] text-zinc-500"><button>Dashboard</button><button className="text-white border-b-2 border-[#00FF88]">Vault</button><button>Storage</button><button>Team</button><button>Settings</button></div></div>
-        <div className="flex gap-4"><button>🔔</button><button className="w-7 h-7 rounded-full bg-zinc-800 text-[10px]">JD</button></div>
-      </nav>
-
-      <div className="flex-1 grid lg:grid-cols-[1.15fr_0.85fr]">
-        <div className="border-r border-white/[0.08] bg-[#0F0F0F] p-8 flex flex-col min-h-[calc(100vh-56px)]">
-          <h1 className="text-[26px] font-bold">My Vault</h1>
-          <div className="mt-4 flex-1 rounded-lg border border-white/[0.08] bg-[#1E1E1E] flex flex-col">
-             <div className="grid grid-cols-12 px-4 py-2.5 text-[10px] font-bold text-zinc-500 bg-[#2A2A2A]"><div className="col-span-6">NAME</div><div className="col-span-2">TYPE</div><div className="col-span-2">SIZE</div><div className="col-span-2">STATUS</div></div>
-             {files.map((f,i)=><div key={i} className="grid grid-cols-12 px-4 py-3 text-[12px] border-b border-white/[0.05]"><div className="col-span-6 flex gap-2"><div className={`w-5 h-5 rounded ${f.color} text-[7px] flex items-center justify-center font-bold`}>{f.icon}</div>{f.name}</div><div className="col-span-2 text-[11px] text-zinc-400">{f.type}</div><div className="col-span-2 text-[11px] text-zinc-400">{f.size}</div><div className="col-span-2"><span className="px-2 py-1 rounded-full bg-[#00FF88]/20 text-[#00FF88] text-[9px]">● Secure</span></div></div>)}
-             <div className="flex-1 min-h-[300px]"></div>
+    <div className="min-h-screen bg-[#0B0B0F] p-4 text-white">
+      {/* HEADER - SIGILLUQ VAULT */}
+      <div className="max-w-[1250px] mx-auto bg-[#1A1A1E] border border-white/10 rounded-xl px-4 py-3 flex justify-between items-center mb-4">
+        <div className="flex items-center gap-5">
+          <button className="text-white/50 text-[13px]">← Go Back</button>
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-[#00FF88]/15 border border-[#00FF88]/20 rounded-lg flex items-center justify-center">🛡️</div>
+            <h1 className="font-black tracking-widest text-[15px]"><span className="text-[#00FF88]">SIGILLUQ</span> <span className="text-white ml-1">VAULT</span></h1>
           </div>
         </div>
+        <div className="flex items-center gap-3">
+          <div className="w-7 h-7 bg-[#00FF88]/20 rounded-full flex items-center justify-center text-[#00FF88] text-xs">JS</div>
+          <span className="text-xs text-white/60">john.smith@company</span>
+          <button className="text-[11px] border border-white/15 px-4 py-1.5 rounded-full text-white/50">Log Out</button>
+        </div>
+      </div>
 
-        <div className="bg-[#121212] p-8 flex flex-col min-h-[calc(100vh-56px)]">
-          <h2 className="text-[20px] font-bold text-center">Storage & Upload</h2>
-          <p className="text-[11px] text-zinc-500 text-center">Cloud storage management • 10TB plan</p>
+      <div className="max-w-[1250px] mx-auto grid grid-cols-[320px_1fr] gap-4">
+        {/* LEFT - My Vault */}
+        <div className="bg-[#16161A] border border-white/10 rounded-xl p-4">
+          <h2 className="font-bold mb-4">📁 My Vault</h2>
+          {/*... tus files... */}
+        </div>
 
-          <div className="flex flex-col items-center mt-8">
-            <div className="relative w-[150px] h-[150px]"><div className="absolute inset-0 rounded-full border-[10px] border-[#1E1E1E]"></div><div className="absolute inset-0 rounded-full border-[10px] border-[#00FF88] border-l-transparent rotate-45"></div><div className="absolute inset-0 flex flex-col items-center justify-center"><span className="text-[28px] font-bold text-[#00FF88]">62%</span><span className="text-[9px] text-zinc-400">6.2TB / 10TB used</span></div></div>
+        {/* RIGHT */}
+        <div className="space-y-4">
+          <div className="bg-[#16161A] border border-white/10 rounded-xl p-5">
+            <h2 className="font-bold">💾 Storage Usage 62%</h2>
+            <div className="mt-4 border border-dashed border-[#00FF88]/60 rounded-lg py-4 text-center">
+              <p className="text-[#00FF88] font-bold text-sm">⬇ Drag & drop files here</p>
+            </div>
           </div>
 
-          <label className="mt-8 w-full rounded-xl border border-dashed border-[#00FF88]/30 bg-[#0A0A0A] p-6 text-center cursor-pointer">
-            <p className="font-bold text-[13px]">Drag & drop files here</p>
-            <p className="text-[10px] text-zinc-500 mt-1">PDF, XLSX, CSV, DOCX, TXT • Max 500MB</p>
-            <input type="file" className="hidden" multiple onChange={(e)=>handleUpload(e.target.files)} />
-          </label>
+          <div className="bg-[#16161A] border border-white/10 rounded-xl p-5">
+            <h2 className="font-bold">Upgrade Storage Package</h2>
+            {/*... tus packages con radios... */}
+          </div>
 
-          <button onClick={()=>document.querySelector<HTMLInputElement>('input[type=file]')?.click()} className="w-full mt-3 h-[48px] rounded-lg bg-[#00FF88] text-black font-bold text-[13px]">
-            {uploading? "Securing files..." : "⇧ Upload Files"}
-          </button>
-
-          <div className="flex-1"></div>
-          <p className="text-[10px] text-zinc-600 text-center mt-4">Files are encrypted end-to-end • Retention: 90 days</p>
+          {/* FOOTER PATENTE */}
+          <div className="flex justify-between text-[10px] text-white/30">
+            <span>SIGILLUQ 616TB - Encrypted</span>
+            <span className="border border-white/15 px-3 py-1 rounded-full">U.S. Pat. App. No. 64/153,968 - Patent Pending</span>
+            <span>© 2026 SIGILLUQ - All Rights Reserved</span>
+          </div>
         </div>
       </div>
     </div>
