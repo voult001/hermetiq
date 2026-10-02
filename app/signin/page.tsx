@@ -20,7 +20,8 @@ export default function SignInPage(){
       setLoading(false)
       return
     }
-    router.push("/dashboard")
+    // FIX - ahora va a selection page, no al dashboard directo
+    router.push("/choose-role")
   }
 
   return (
@@ -37,7 +38,7 @@ export default function SignInPage(){
             </button>
           </div>
           <button type="submit" disabled={loading} className="w-full p-3 bg-[#39FF14] text-black font-bold rounded-lg">
-            {loading ? "Signing in..." : "Sign In"}
+            {loading ? "Signing in...." : "Sign In"}
           </button>
         </form>
       </div>
