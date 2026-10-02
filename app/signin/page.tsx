@@ -20,25 +20,24 @@ export default function SignInPage(){
       setLoading(false)
       return
     }
-    // FIX - ahora va a selection page, no al dashboard directo
     router.push("/choose-role")
   }
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center p-4">
-      <div className="w-full max-w-sm bg-[#1a2e1a]/50 backdrop-blur border border-[#39FF14]/20 rounded-2xl p-6">
-        <h2 className="text-white text-xl font-bold">Welcome back</h2>
-        <p className="text-zinc-400 text-sm mb-6">Sign in to your vault</p>
-        <form onSubmit={handleSignIn}>
-          <input value={email} onChange={e=>setEmail(e.target.value)} placeholder="Email" className="w-full p-3 mb-3 bg-zinc-900 border border-zinc-700 rounded-lg text-white" required />
-          <div className="relative mb-4">
-            <input type={showPassword ? "text":"password"} value={password} onChange={e=>setPassword(e.target.value)} placeholder="Password" className="w-full p-3 pr-12 bg-zinc-900 border border-zinc-700 rounded-lg text-white" required />
-            <button type="button" onClick={()=>setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400">
+    <div className="min-h-screen bg-black flex items-center justify-center p-6">
+      <div className="w-full max-w-sm bg-[#111] border border-[#39FF14]/20 rounded-2xl p-6">
+        <h1 className="text-white text-xl font-bold">Welcome back</h1>
+        <p className="text-zinc-500 text-sm mb-6">Sign in to your vault</p>
+        <form onSubmit={handleSignIn} className="space-y-4">
+          <input value={email} onChange={e=>setEmail(e.target.value)} placeholder="Email" className="w-full p-3 bg-zinc-900 border border-zinc-800 rounded-lg text-white" required />
+          <div className="relative">
+            <input type={showPassword ? "text" : "password"} value={password} onChange={e=>setPassword(e.target.value)} placeholder="Password" className="w-full p-3 pr-12 bg-zinc-900 border border-zinc-800 rounded-lg text-white" required />
+            <button type="button" onClick={()=>setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500">
               {showPassword ? <EyeOff className="w-5 h-5"/> : <Eye className="w-5 h-5"/>}
             </button>
           </div>
           <button type="submit" disabled={loading} className="w-full p-3 bg-[#39FF14] text-black font-bold rounded-lg">
-            {loading ? "Signing in...." : "Sign In"}
+            {loading ? "Signing in..." : "Sign In"}
           </button>
         </form>
       </div>
