@@ -1,47 +1,47 @@
-"use client"
-import { useRouter } from "next/navigation"
-import { HardDrive, Shield, ArrowRight } from "lucide-react"
+'use client'
+import { useRouter } from 'next/navigation'
+import { createClient } from '@supabase/supabase-js'
 
 export default function ChooseRolePage() {
   const router = useRouter()
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  )
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut()
+    router.push('/')
+  }
+
   return (
-    <div className="min-h-screen bg-black flex flex-col items-center justify-center p-6">
-      <div className="text-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Choose Your Path</h1>
-        <p className="text-zinc-400 text-lg">Select how you want to use <span className="text-[#39FF14] font-bold">SIGILLUQ</span></p>
+    <div className="min-h-screen bg-black flex flex-col items-center p-4">
+      {/* HEADER NUEVO - SOLO ESTO AGREGAMOS */}
+      <div className="w-full max-w-5xl flex justify-between items-center py-4 mb-4">
+        <div className="text-white font-bold text-xl tracking-widest">SIGILLUQ</div>
+        <button onClick={handleSignOut} className="text-white border border-white/20 px-4 py-2 rounded-full text-sm hover:bg-white hover:text-black transition">
+          Sign Out
+        </button>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-5xl">
-        <div className="group bg-[#111] border border-zinc-800 rounded-[24px] p-8 hover:border-[#39FF14]/50 transition-all hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(57,255,20,0.15)]">
-          <div className="w-14 h-14 bg-[#39FF14]/10 border border-[#39FF14]/20 rounded-2xl flex items-center justify-center mb-6">
-            <HardDrive className="w-7 h-7 text-[#39FF14]" />
-          </div>
-          <div className="mb-2 text-[#39FF14] text-xs font-bold tracking-[0.2em] uppercase">HOSTS - EARN PASSIVE INCOME</div>
-          <h2 className="text-2xl font-bold text-white mb-3">Monetize Your Space</h2>
-          <p className="text-zinc-400 text-sm mb-6">Turn unused storage into monthly revenue. Encrypted, zero-access architecture.</p>
-          <div className="space-y-2.5 mb-8">
-            <div className="flex items-center gap-2.5 text-sm text-zinc-300"><div className="w-1.5 h-1.5 bg-[#39FF14] rounded-full"></div>500GB - 2TB per vault</div>
-            <div className="flex items-center gap-2.5 text-sm text-zinc-300"><div className="w-1.5 h-1.5 bg-[#39FF14] rounded-full"></div>Monthly payouts, automated</div>
-            <div className="flex items-center gap-2.5 text-sm text-zinc-300"><div className="w-1.5 h-1.5 bg-[#39FF14] rounded-full"></div>Zero-knowledge. You can't see data</div>
-          </div>
-          <button onClick={() => router.push('/host')} className="w-full bg-[#39FF14] text-black font-bold py-4 rounded-full flex items-center justify-center gap-2 hover:bg-[#32e012] transition">
-            Become a Host <ArrowRight className="w-5 h-5" />
-          </button>
+
+      <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 text-center">Choose Your Path</h1>
+      <p className="text-zinc-400 mb-10 text-center">Select how you want to use Sigilluq</p>
+
+      <div className="grid md:grid-cols-2 gap-8 w-full max-w-5xl">
+        {/* CUADRADO 1 - HOST - LO DEJAMOS IGUAL */}
+        <div onClick={() => router.push('/host')} className="group bg-[#111] border border-[#222] rounded-3xl p-8 hover:border-white transition cursor-pointer">
+          <div className="text-zinc-500 text-xs font-bold tracking-widest mb-4">HOSTS</div>
+          <h2 className="text-3xl font-bold text-white mb-2">EARN PASSIVE INCOME</h2>
+          <p className="text-zinc-400 text-sm mb-6">Turn your extra storage into monthly revenue. Set your price, keep 90%.</p>
+          <div className="bg-white text-black font-bold w-full py-3 rounded-full text-center group-hover:bg-zinc-200">Continue as Host →</div>
         </div>
-        <div className="group bg-[#111] border border-zinc-800 rounded-[24px] p-8 hover:border-[#39FF14]/50 transition-all hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(57,255,20,0.15)]">
-          <div className="w-14 h-14 bg-[#39FF14]/10 border border-[#39FF14]/20 rounded-2xl flex items-center justify-center mb-6">
-            <Shield className="w-7 h-7 text-[#39FF14]" />
-          </div>
-          <div className="mb-2 text-[#39FF14] text-xs font-bold tracking-[0.2em] uppercase">GUESTS - SECURE & CHEAPER</div>
-          <h2 className="text-2xl font-bold text-white mb-3">Private Vault Storage</h2>
-          <p className="text-zinc-400 text-sm mb-6">Military-grade privacy at a fraction of Big Tech prices. Your data, only yours.</p>
-          <div className="space-y-2.5 mb-8">
-            <div className="flex items-center gap-2.5 text-sm text-zinc-300"><div className="w-1.5 h-1.5 bg-[#39FF14] rounded-full"></div>50% cheaper than Google & Dropbox</div>
-            <div className="flex items-center gap-2.5 text-sm text-zinc-300"><div className="w-1.5 h-1.5 bg-[#39FF14] rounded-full"></div>End-to-end encrypted, blind architecture</div>
-            <div className="flex items-center gap-2.5 text-sm text-zinc-300"><div className="w-1.5 h-1.5 bg-[#39FF14] rounded-full"></div>Redundant by design. Never lose a file</div>
-          </div>
-          <button onClick={() => router.push('/dashboard')} className="w-full bg-[#39FF14] text-black font-bold py-4 rounded-full flex items-center justify-center gap-2 hover:bg-[#32e012] transition">
-            Start Storing <ArrowRight className="w-5 h-5" />
-          </button>
+
+        {/* CUADRADO 2 - VAULT - LO DEJAMOS IGUAL */}
+        <div onClick={() => router.push('/dashboard')} className="group bg-[#111] border border-[#222] rounded-3xl p-8 hover:border-white transition cursor-pointer">
+          <div className="text-zinc-500 text-xs font-bold tracking-widest mb-4">VAULTS</div>
+          <h2 className="text-3xl font-bold text-white mb-2">SECURE YOUR DATA</h2>
+          <p className="text-zinc-400 text-sm mb-6">Military-grade privacy at a fraction of Big Tech cost. Encrypted by design. Never see a tracker.</p>
+          <div className="bg-zinc-800 text-white font-bold w-full py-3 rounded-full text-center group-hover:bg-zinc-700">Continue as Vault →</div>
         </div>
       </div>
     </div>
