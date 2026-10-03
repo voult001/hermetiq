@@ -11,12 +11,11 @@ export default function ChooseRolePage() {
 
   const handleSignOut = async () => {
     await supabase.auth.signOut()
-    router.push('/')
+    window.location.href = '/'
   }
 
   return (
     <div className="min-h-screen bg-black flex flex-col items-center p-4">
-      {/* HEADER NUEVO - SOLO ESTO AGREGAMOS */}
       <div className="w-full max-w-5xl flex justify-between items-center py-4 mb-4">
         <div className="text-white font-bold text-xl tracking-widest">SIGILLUQ</div>
         <button onClick={handleSignOut} className="text-white border border-white/20 px-4 py-2 rounded-full text-sm hover:bg-white hover:text-black transition">
@@ -28,7 +27,6 @@ export default function ChooseRolePage() {
       <p className="text-zinc-400 mb-10 text-center">Select how you want to use Sigilluq</p>
 
       <div className="grid md:grid-cols-2 gap-8 w-full max-w-5xl">
-        {/* CUADRADO 1 - HOST - LO DEJAMOS IGUAL */}
         <div onClick={() => router.push('/host')} className="group bg-[#111] border border-[#222] rounded-3xl p-8 hover:border-white transition cursor-pointer">
           <div className="text-zinc-500 text-xs font-bold tracking-widest mb-4">HOSTS</div>
           <h2 className="text-3xl font-bold text-white mb-2">EARN PASSIVE INCOME</h2>
@@ -36,7 +34,6 @@ export default function ChooseRolePage() {
           <div className="bg-white text-black font-bold w-full py-3 rounded-full text-center group-hover:bg-zinc-200">Continue as Host →</div>
         </div>
 
-        {/* CUADRADO 2 - VAULT - LO DEJAMOS IGUAL */}
         <div onClick={() => router.push('/dashboard')} className="group bg-[#111] border border-[#222] rounded-3xl p-8 hover:border-white transition cursor-pointer">
           <div className="text-zinc-500 text-xs font-bold tracking-widest mb-4">VAULTS</div>
           <h2 className="text-3xl font-bold text-white mb-2">SECURE YOUR DATA</h2>
