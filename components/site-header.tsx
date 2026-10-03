@@ -48,7 +48,7 @@ export function SiteHeader() {
             </>
           ) : (
             <>
-              <Link href="/login">
+              <Link href="/signin">
                 <Button variant="outline" className="rounded-full px-5 font-mono border-white/20 bg-transparent text-white hover:bg-white hover:text-black">
                   Sign In
                 </Button>
