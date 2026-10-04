@@ -12,7 +12,7 @@ export default function HostPage(){
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 bg-[#39FF14] rounded-lg flex items-center justify-center font-black text-black">S</div>
             <span className="text-white font-bold">SIGILLUQ</span>
-            <span className="text-zinc-600 text-sm ml-2">Host</span>
+            <span className="text-zinc-600 text-sm ml-2">Host • 616TB</span>
           </div>
           <button onClick={() => router.push('/')} className="flex items-center gap-2 text-zinc-400 hover:text-white text-sm border border-zinc-800 px-4 py-2 rounded-full hover:border-zinc-700">
             <LogOut className="w-4 h-4" /> Sign Out
@@ -22,7 +22,7 @@ export default function HostPage(){
 
       <div className="max-w-6xl mx-auto p-6 md:p-10">
         <h1 className="text-4xl font-bold text-white mb-2">Welcome back, Host</h1>
-        <p className="text-zinc-400 mb-10">Here's what's happening with your vaults today</p>
+        <p className="text-zinc-400 mb-10">Here's what's happening with your silos today</p>
 
         {/* 3 BIG CARDS */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
@@ -31,7 +31,7 @@ export default function HostPage(){
               <div className="w-12 h-12 bg-[#39FF14]/10 border border-[#39FF14]/20 rounded-2xl flex items-center justify-center">
                 <HardDrive className="w-6 h-6 text-[#39FF14]" />
               </div>
-              <span className="text-[10px] bg-[#39FF14]/10 text-[#39FF14] border border-[#39FF14]/20 px-3 py-1 rounded-full font-bold">2 VAULTS</span>
+              <span className="text-[10px] bg-[#39FF14]/10 text-[#39FF14] border border-[#39FF14]/20 px-3 py-1 rounded-full font-bold">2 SILOS</span>
             </div>
             <div className="text-zinc-400 text-sm mb-2">Total Storage Offered</div>
             <div className="text-4xl font-bold text-white mb-1">2.0 TB</div>
@@ -66,32 +66,31 @@ export default function HostPage(){
               </div>
               <div className="flex items-center gap-2"><div className="w-2.5 h-2.5 bg-[#39FF14] rounded-full animate-pulse"></div><span className="text-[#39FF14] text-xs font-bold">ONLINE</span></div>
             </div>
-            <div className="text-zinc-400 text-sm mb-2">Vault Status</div>
+            <div className="text-zinc-400 text-sm mb-2">Silo Status</div>
             <div className="text-4xl font-bold text-white mb-1">99.8%</div>
             <div className="text-sm text-zinc-500 mb-6">Uptime • 24 days running</div>
             <div className="bg-zinc-900 rounded-xl p-3 text-xs text-zinc-400 flex items-center gap-2"><Server className="w-4 h-4 text-zinc-500" /> Zero-knowledge active. You can't see guest data.</div>
           </div>
         </div>
 
-        {/* VAULTS LIST + EARNINGS DETAIL - THIS IS WHAT WAS MISSING */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 bg-[#111] border border-zinc-800 rounded-[24px] p-8">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-white font-bold text-xl">My Vaults</h3>
-              <span className="text-zinc-500 text-sm">2 active • Encrypted</span>
+              <h3 className="text-white font-bold text-xl">My Silos</h3>
+              <span className="text-zinc-500 text-sm">2 active • Encrypted • 616TB</span>
             </div>
             <div className="space-y-4">
               <div className="bg-black border border-zinc-800 rounded-2xl p-5 flex items-center justify-between">
                 <div className="flex items-center gap-4">
                   <div className="w-10 h-10 bg-zinc-800 rounded-xl flex items-center justify-center"><HardDrive className="w-5 h-5 text-zinc-400" /></div>
-                  <div><div className="text-white font-bold">Vault #1 • Mac Mini</div><div className="text-zinc-500 text-xs">1TB • 450GB used • /Volumes/Storage1</div></div>
+                  <div><div className="text-white font-bold">Silo #1 • Mac Mini</div><div className="text-zinc-500 text-xs">1TB • 450GB used • /Volumes/Storage1</div></div>
                 </div>
                 <div className="text-right"><div className="text-[#39FF14] text-sm font-bold">$12/mo</div><div className="text-zinc-500 text-xs">Online</div></div>
               </div>
               <div className="bg-black border border-zinc-800 rounded-2xl p-5 flex items-center justify-between">
                 <div className="flex items-center gap-4">
                   <div className="w-10 h-10 bg-zinc-800 rounded-xl flex items-center justify-center"><Usb className="w-5 h-5 text-zinc-400" /></div>
-                  <div><div className="text-white font-bold">Vault #2 • External HDD</div><div className="text-zinc-500 text-xs">1TB • 250GB used • Seagate 4TB</div></div>
+                  <div><div className="text-white font-bold">Silo #2 • External HDD</div><div className="text-zinc-500 text-xs">1TB • 250GB used • Seagate 4TB</div></div>
                 </div>
                 <div className="text-right"><div className="text-[#39FF14] text-sm font-bold">$11.4/mo</div><div className="text-zinc-500 text-xs">Online</div></div>
               </div>
@@ -110,7 +109,7 @@ export default function HostPage(){
             </div>
             <div className="mt-8 bg-black rounded-xl p-4 border border-zinc-800">
               <div className="text-zinc-500 text-[11px] uppercase tracking-widest font-bold mb-2">Security Info</div>
-              <div className="text-zinc-400 text-xs leading-relaxed">Zero-knowledge encryption. Your vault stores only encrypted fragments. You cannot see, open or access guest files. Redundant & blind by design.</div>
+              <div className="text-zinc-400 text-xs leading-relaxed">Zero-knowledge encryption. Your silo stores only encrypted fragments. You cannot see, open or access guest files. Redundant & blind by design. SIGILLUQ 616TB.</div>
             </div>
           </div>
         </div>
