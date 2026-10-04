@@ -1,18 +1,18 @@
 "use client"
 import { useState } from "react"
-import Link from "next/link"
+import { HardDrive, Shield, Lock, Plus, LogOut, Server, Upload, File, Folder } from "lucide-react"
+import { useRouter } from "next/navigation"
 
-export default function SiloPage() {
+export default function SiloPage(){
+  const router = useRouter()
   const [selected, setSelected] = useState("100GB")
   const [hasPaid, setHasPaid] = useState(false)
   const [dragOver, setDragOver] = useState(false)
   const [files, setFiles] = useState([
-    { name: "Contracts", detail: "12 items • 3.2 GB" },
-    { name: "Q4_Financial_Report.pdf", detail: "2 days ago • 24.8 MB" },
-    { name: "Product_Assets", detail: "87 items • 1.1 GB" },
-    { name: "Investor_Deck_v3.pptx", detail: "1 week ago • 8.3 MB" },
-    { name: "API_Documentation.md", detail: "2 weeks ago • 156 KB" },
-    { name: "Backups_2024.zip", detail: "1 month ago • 512 MB" },
+    { name: "Contracts", detail: "12 items • 3.2 GB", icon: "folder" },
+    { name: "Q4_Financial_Report.pdf", detail: "2 days ago • 24.8 MB", icon: "file" },
+    { name: "Product_Assets", detail: "87 items • 1.1 GB", icon: "folder" },
+    { name: "Investor_Deck_v3.pptx", detail: "1 week ago • 8.3 MB", icon: "file" },
   ])
 
   const small = [
@@ -24,7 +24,6 @@ export default function SiloPage() {
   ]
 
   const handlePay = () => {
-    alert(`Pagando ${selected}...`)
     setHasPaid(true)
   }
 
@@ -32,118 +31,173 @@ export default function SiloPage() {
     if (!hasPaid) return
     const newFiles = Array.from(list).map(f => ({
       name: f.name,
-      detail: `Just now • ${(f.size/1024/1024).toFixed(1)} MB`
+      detail: `Just now • ${(f.size/1024/1024).toFixed(1)} MB`,
+      icon: "file"
     }))
     setFiles([...newFiles,...files])
   }
 
   return (
-    <div className="min-h-screen bg-[#0A0A0C] text-white p-4">
-      {/* HEADER MAS GRANDE - SIGILLUQ SILO */}
-      <div className="max-w-[95%] mx-auto bg-[#1C1C1F] border border-white/10 rounded-xl px-6 py-4 flex justify-between items-center mb-4">
-        <div className="flex items-center gap-4">
-          <Link href="/choose-role" className="text-white/50 text-sm cursor-pointer hover:text-white">← Go Back</Link>
-          <span className="bg-[#00FF88]/20 border border-[#00FF88]/30 px-3 py-1.5 rounded text-[11px] text-[#00FF88]">🛡️</span>
-          <h1 className="font-black text-[15px] tracking-widest"><span className="text-[#00FF88]">SIGILLUQ</span> SILO</h1>
-          <span className="text-[9px] text-white/20">616TB • ENCRYPTED • PATENT PENDING</span>
-        </div>
-        <div className="flex items-center gap-3 text-sm text-white/60">
-          <span className="w-6 h-6 bg-[#00FF88]/20 rounded-full flex items-center justify-center text-[#00FF88] text-[11px]">JS</span>
-          john.smith@company <Link href="/" className="border border-white/10 px-4 py-1.5 rounded-full ml-2 cursor-pointer hover:border-white/20">Log Out</Link>
+    <div className="min-h-screen bg-black">
+      {/* HEADER - MISMO QUE HOST */}
+      <div className="border-b border-zinc-800 bg-[#0a0a0a] sticky top-0 z-10">
+        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-[#39FF14] rounded-lg flex items-center justify-center font-black text-black">S</div>
+            <span className="text-white font-bold">SIGILLUQ</span>
+            <span className="text-zinc-600 text-sm ml-2">Silo • 616TB Encrypted</span>
+          </div>
+          <div className="flex items-center gap-3">
+            <button onClick={() => router.push('/choose-role')} className="text-zinc-400 hover:text-white text-sm border border-zinc-800 px-4 py-2 rounded-full hover:border-zinc-700">
+              ← Go Back
+            </button>
+            <button onClick={() => router.push('/')} className="flex items-center gap-2 text-zinc-400 hover:text-white text-sm border border-zinc-800 px-4 py-2 rounded-full hover:border-zinc-700">
+              <LogOut className="w-4 h-4" /> Sign Out
+            </button>
+          </div>
         </div>
       </div>
 
-      <div className="max-w-[95%] mx-auto grid grid-cols-[340px_1fr] gap-4">
-        {/* MY SILO - IZQUIERDA */}
-        <div className="bg-[#16161A] border border-white/10 rounded-xl p-5 h-fit">
-          <div className="flex justify-between mb-4"><h2 className="font-bold text-[15px]">📁 My Silo</h2><span className="text-[#00FF88] text-sm cursor-pointer">+ New</span></div>
-          <input placeholder="Q Search in silo..." className="w-full bg-[#232326] rounded-lg px-4 py-2.5 text-sm mb-4 outline-none border border-transparent focus:border-[#00FF88]/30" />
-          {files.map((f,i)=>(
-            <div key={i} className="bg-[#1F1F23] p-3 rounded-lg mb-2.5 flex gap-3 hover:bg-[#232326] cursor-pointer">
-              <span className="text-[16px]">📁</span>
-              <div><p className="text-[13px] truncate">{f.name}</p><p className="text-[11px] text-white/30">{f.detail}</p></div>
-            </div>
-          ))}
-          <p className="text-[12px] text-[#00FF88] mt-5">● Synced - All files secure</p>
-        </div>
+      <div className="max-w-6xl mx-auto p-6 md:p-10">
+        <h1 className="text-4xl font-bold text-white mb-2">Welcome back, Vault</h1>
+        <p className="text-zinc-400 mb-10">Your SIGILLUQ Silo is encrypted & distributed across the network</p>
 
-        <div className="space-y-4">
-          {/* STORAGE USAGE */}
-          <div className="bg-[#16161A] border border-white/10 rounded-xl p-5">
-            <div className="flex justify-between"><h2 className="font-bold text-[15px]">💾 Storage Usage 62%</h2><span className="text-[10px] border border-[#00FF88]/30 text-[#00FF88] px-3 py-1 rounded-full bg-[#00FF88]/10">Pro Plan • Active</span></div>
-
-            <div className="grid grid-cols-[140px_1fr] gap-6 mt-5">
-              <div className="text-center"><div className="w-[105px] h-[105px] rounded-full border-[8px] border-[#00FF88] border-t-white/10 flex items-center justify-center mx-auto font-black text-[18px] text-[#00FF88]">62%</div><p className="text-[11px] text-white/30 mt-3">1.24 TB / 2 TB used</p></div>
-
-              <div>
-                <div className="grid grid-cols-3 gap-3 mb-4 text-[12px]">
-                  <div className="bg-[#232326] p-3 rounded-lg">Used<br/><b className="text-[14px]">1.24 TB</b></div>
-                  <div className="bg-[#232326] p-3 rounded-lg">Available<br/><b className="text-[14px]">760 GB</b></div>
-                  <div className="bg-[#232326] p-3 rounded-lg">Files<br/><b className="text-[14px]">{files.length}</b></div>
-                </div>
-
-                <div
-                  onDragOver={e=>{if(hasPaid){e.preventDefault(); setDragOver(true)}}}
-                  onDragLeave={()=>setDragOver(false)}
-                  onDrop={e=>{if(hasPaid){e.preventDefault(); setDragOver(false); handleFiles(e.dataTransfer.files)}}}
-                  className={`border border-dashed rounded-xl py-8 text-center transition-all ${!hasPaid? 'border-[#FFB020]/40 bg-[#FFB020]/[0.04]' : dragOver? 'border-[#00FF88] bg-[#00FF88]/10' : 'border-[#00FF88]/50 bg-[#00FF88]/[0.03]'}`}
-                >
-                  {!hasPaid? (
-                    <>
-                      <p className="font-black text-[#FFB020] text-[16px]">🔒 Select Package First</p>
-                      <p className="text-white/40 text-[12px] mt-1">Select a storage package below to unlock uploads</p>
-                      <p className="text-white/20 text-[11px] mt-1">Browse Files is disabled</p>
-                    </>
-                  ) : (
-                    <>
-                      <p className="font-bold text-[#00FF88] text-[15px]">⬇ Drag & drop files here to upload</p>
-                      <p className="text-white/40 text-[12px] mt-1">or click to browse • Max 10GB per file • Encrypted</p>
-                      <button onClick={()=>document.getElementById('fileInput')?.click()} className="mt-2 text-[#00FF88] text-sm underline">Browse Files</button>
-                      <input id="fileInput" type="file" multiple hidden onChange={e=>e.target.files && handleFiles(e.target.files)} />
-                    </>
-                  )}
-                </div>
+        {/* 3 BIG CARDS - MISMO FORMATO QUE HOST */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+          <div className="bg-[#111] border border-zinc-800 rounded-[24px] p-8">
+            <div className="flex justify-between items-start mb-6">
+              <div className="w-12 h-12 bg-[#39FF14]/10 border border-[#39FF14]/20 rounded-2xl flex items-center justify-center">
+                <HardDrive className="w-6 h-6 text-[#39FF14]" />
               </div>
+              <span className="text-[10px] bg-[#39FF14]/10 text-[#39FF14] border border-[#39FF14]/20 px-3 py-1 rounded-full font-bold">{files.length} FILES</span>
+            </div>
+            <div className="text-zinc-400 text-sm mb-2">Storage Usage</div>
+            <div className="text-4xl font-bold text-white mb-1">62%</div>
+            <div className="text-sm text-zinc-500 mb-6">1.24 TB / 2 TB used</div>
+            <div className="w-full bg-zinc-800 h-2.5 rounded-full overflow-hidden">
+              <div className="bg-[#39FF14] h-full w-[62%] shadow-[0_0_10px_#39FF14]"></div>
             </div>
           </div>
 
-          {/* UPGRADE PACKAGE */}
-          <div className="bg-[#16161A] border border-white/10 rounded-xl p-5">
-            <h2 className="font-bold text-[15px]">Upgrade Storage Package</h2>
-            <p className="text-white/40 text-[12px] mb-4">Select a plan to increase your storage capacity</p>
-
-            <div className="grid grid-cols-2 gap-8">
-              <div>
-                <p className="text-[13px] font-bold mb-3">📦 Small Package <span className="text-[9px] bg-white/10 px-2.5 py-1 rounded-full ml-2">Popular</span></p>
-                {small.map(p=>(
-                  <div key={p.id} onClick={()=>setSelected(p.id)} className={`flex justify-between items-center p-3 rounded-lg border mb-2.5 cursor-pointer ${selected===p.id? 'bg-[#00FF88]/10 border-[#00FF88] shadow-[0_0_12px_rgba(0,255,136,0.15)]' : 'bg-[#1F1F23] border-white/5'}`}>
-                    <span className="flex items-center gap-3 text-[13px]"><span className={`w-5 h-5 rounded-full border flex items-center justify-center ${selected===p.id?'border-[#00FF88]':'border-white/20'}`}>{selected===p.id && <span className="w-2.5 h-2.5 bg-[#00FF88] rounded-full"></span>}</span>{p.id}</span>
-                    <span className="text-[12px] text-white/50">{p.price}</span>
-                  </div>
-                ))}
+          <div className="bg-[#111] border border-zinc-800 rounded-[24px] p-8 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-40 h-40 bg-[#39FF14]/5 rounded-full blur-3xl"></div>
+            <div className="flex justify-between items-start mb-6 relative">
+              <div className="w-12 h-12 bg-[#39FF14]/10 border border-[#39FF14]/20 rounded-2xl flex items-center justify-center">
+                <Shield className="w-6 h-6 text-[#39FF14]" />
               </div>
-              <div className="opacity-70">
-                <p className="text-[13px] font-bold mb-3">🗄️ Big Package <span className="text-[9px] bg-white/10 px-2.5 py-1 rounded-full ml-2">Enterprise</span></p>
-                {[["10TB","$249 /mo"],["100TB","$1,999 /mo"],["500TB","$7,500 /mo"],["1PB+","Custom Pricing"]].map(([id,price])=>(
-                  <div key={id} className="flex justify-between items-center p-3 rounded-lg border border-white/5 bg-[#1F1F23] mb-2.5 text-[13px]"><span className="flex gap-3"><span className="w-5 h-5 rounded-full border border-white/20"></span>{id}</span><span className={`${id==='1PB+'?'text-[#00FF88]':'text-white/50'} text-[12px]`}>{price}</span></div>
-                ))}
+              <span className="text-[10px] bg-[#39FF14]/10 text-[#39FF14] border border-[#39FF14]/20 px-3 py-1 rounded-full font-bold">ENCRYPTED</span>
+            </div>
+            <div className="text-zinc-400 text-sm mb-2 relative">Security Status</div>
+            <div className="text-4xl font-bold text-white mb-1 relative">Military</div>
+            <div className="text-sm text-[#39FF14] mb-6 relative">Grade • Zero-knowledge • Blind shards</div>
+            <div className="bg-zinc-900 rounded-xl p-3 text-xs text-zinc-400 flex items-center gap-2 relative"><Lock className="w-4 h-4 text-zinc-500" /> Only you hold the key. Hosts can't see your data.</div>
+          </div>
+
+          <div className="bg-[#111] border border-zinc-800 rounded-[24px] p-8">
+            <div className="flex justify-between items-start mb-6">
+              <div className="w-12 h-12 bg-[#39FF14]/10 border border-[#39FF14]/20 rounded-2xl flex items-center justify-center">
+                <Server className="w-6 h-6 text-[#39FF14]" />
+              </div>
+              <div className="flex items-center gap-2"><div className="w-2.5 h-2.5 bg-[#39FF14] rounded-full animate-pulse"></div><span className="text-[#39FF14] text-xs font-bold">616TB NETWORK</span></div>
+            </div>
+            <div className="text-zinc-400 text-sm mb-2">Current Plan</div>
+            <div className="text-4xl font-bold text-white mb-1">{selected}</div>
+            <div className="text-sm text-zinc-500 mb-6">{hasPaid? 'Active • Encrypted & Distributed' : 'Select package below'}</div>
+            <div className="bg-zinc-900 rounded-xl p-3 text-xs text-zinc-400 flex items-center gap-2"><Upload className="w-4 h-4 text-zinc-500" /> {hasPaid? 'Drag & drop enabled' : 'Select package to unlock uploads'}</div>
+          </div>
+        </div>
+
+        {/* DRAG & DROP + FILES LIST + UPGRADE - MISMO GRID QUE HOST */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2 space-y-6">
+            {/* UPLOAD AREA */}
+            <div className="bg-[#111] border border-zinc-800 rounded-[24px] p-8">
+              <h3 className="text-white font-bold text-xl mb-6">Upload Files</h3>
+              <div
+                onDragOver={e=>{if(hasPaid){e.preventDefault(); setDragOver(true)}}}
+                onDragLeave={()=>setDragOver(false)}
+                onDrop={e=>{if(hasPaid){e.preventDefault(); setDragOver(false); handleFiles(e.dataTransfer.files)}}}
+                className={`border border-dashed rounded-[20px] py-12 text-center transition-all ${!hasPaid? 'border-[#FFB020]/30 bg-[#FFB020]/5' : dragOver? 'border-[#39FF14] bg-[#39FF14]/10' : 'border-[#39FF14]/30 bg-[#39FF14]/5'}`}
+              >
+                {!hasPaid? (
+                  <>
+                    <div className="w-16 h-16 bg-[#FFB020]/10 border border-[#FFB020]/20 rounded-2xl flex items-center justify-center mx-auto mb-4"><Lock className="w-8 h-8 text-[#FFB020]" /></div>
+                    <p className="font-bold text-[#FFB020] text-lg">Select Package First</p>
+                    <p className="text-zinc-500 text-sm mt-1">Select a storage package below to unlock uploads</p>
+                  </>
+                ) : (
+                  <>
+                    <div className="w-16 h-16 bg-[#39FF14]/10 border border-[#39FF14]/20 rounded-2xl flex items-center justify-center mx-auto mb-4"><Upload className="w-8 h-8 text-[#39FF14]" /></div>
+                    <p className="font-bold text-[#39FF14] text-lg">Drag & drop files here</p>
+                    <p className="text-zinc-500 text-sm mt-1">or click to browse • Max 10GB per file • Encrypted</p>
+                    <button onClick={()=>document.getElementById('fileInput')?.click()} className="mt-4 bg-[#39FF14] text-black font-bold px-6 py-2.5 rounded-full text-sm hover:bg-[#39FF14]/90">
+                      Browse Files
+                    </button>
+                    <input id="fileInput" type="file" multiple hidden onChange={e=>e.target.files && handleFiles(e.target.files)} />
+                  </>
+                )}
               </div>
             </div>
 
-            <div className="flex justify-between items-center mt-4 pt-4 border-t border-white/5">
-              <span className="text-[12px] text-white/40">Selected: <b className="text-white">{selected}</b> • Click {hasPaid? 'Upgrade' : 'Select'} to pay</span>
-              <button onClick={handlePay} className="bg-[#00FF88] text-black font-black px-6 py-2.5 rounded-full text-[13px] hover:bg-[#00FF88]/90">
-                {!hasPaid? `Select Now →` : `Upgrade Now →`}
+            {/* MY SILO FILES */}
+            <div className="bg-[#111] border border-zinc-800 rounded-[24px] p-8">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-white font-bold text-xl">My Silo</h3>
+                <span className="text-zinc-500 text-sm">{files.length} items • Encrypted</span>
+              </div>
+              <div className="space-y-3">
+                {files.map((f,i)=>(
+                  <div key={i} className="bg-black border border-zinc-800 rounded-2xl p-4 flex items-center justify-between hover:border-zinc-700 transition">
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 bg-zinc-800 rounded-xl flex items-center justify-center">
+                        {f.icon === 'folder'? <Folder className="w-5 h-5 text-zinc-400" /> : <File className="w-5 h-5 text-zinc-400" />}
+                      </div>
+                      <div><div className="text-white font-bold text-sm">{f.name}</div><div className="text-zinc-500 text-xs">{f.detail}</div></div>
+                    </div>
+                    <div className="text-[#39FF14] text-xs">🔒</div>
+                  </div>
+                ))}
+              </div>
+              <button className="w-full mt-6 border border-dashed border-[#39FF14]/40 bg-[#39FF14]/5 hover:bg-[#39FF14]/10 text-[#39FF14] font-bold py-4 rounded-2xl flex items-center justify-center gap-2 transition">
+                <Plus className="w-5 h-5" /> New Folder
               </button>
             </div>
           </div>
 
-          <div className="flex justify-between text-[10px] text-white/25 px-2">
-            <span>🔒 SIGILLUQ 616TB - Encrypted</span>
-            <span className="border border-[#00FF88]/20 px-4 py-1 rounded-full text-[#00FF88]/70">U.S. Pat. App. No. 64/153,968 - Patent Pending</span>
-            <span>© 2026 SIGILLUQ</span>
+          {/* UPGRADE PACKAGE - MISMO ESTILO QUE PAYOUT HISTORY */}
+          <div className="bg-[#111] border border-zinc-800 rounded-[24px] p-8 h-fit">
+            <h3 className="text-white font-bold text-xl mb-2">Upgrade Storage</h3>
+            <p className="text-zinc-500 text-xs mb-6">Select a plan to increase capacity</p>
+
+            <div className="mb-6">
+              <p className="text-[11px] font-bold text-zinc-400 uppercase tracking-widest mb-3">Small Package • Popular</p>
+              {small.map(p=>(
+                <div key={p.id} onClick={()=>setSelected(p.id)} className={`flex justify-between items-center p-4 rounded-2xl border mb-3 cursor-pointer transition ${selected===p.id? 'bg-[#39FF14]/10 border-[#39FF14] shadow-[0_0_15px_rgba(57,255,20,0.15)]' : 'bg-black border-zinc-800 hover:border-zinc-700'}`}>
+                  <span className="flex items-center gap-3 text-sm"><span className={`w-5 h-5 rounded-full border flex items-center justify-center ${selected===p.id?'border-[#39FF14]':'border-zinc-600'}`}>{selected===p.id && <span className="w-2.5 h-2.5 bg-[#39FF14] rounded-full"></span>}</span><span className={selected===p.id?'text-white font-bold':'text-zinc-400'}>{p.id}</span></span>
+                  <span className={`text-xs ${selected===p.id?'text-[#39FF14] font-bold':'text-zinc-500'}`}>{p.price}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="opacity-60 mb-6">
+              <p className="text-[11px] font-bold text-zinc-400 uppercase tracking-widest mb-3">Big Package • Enterprise</p>
+              {[["10TB","$249 /mo"],["100TB","$1,999 /mo"],["500TB","$7,500 /mo"]].map(([id,price])=>(
+                <div key={id} className="flex justify-between items-center p-4 rounded-2xl border border-zinc-800 bg-black mb-3 text-sm"><span className="flex gap-3"><span className="w-5 h-5 rounded-full border border-zinc-700"></span><span className="text-zinc-500">{id}</span></span><span className="text-zinc-600 text-xs">{price}</span></div>
+              ))}
+            </div>
+
+            <button onClick={handlePay} className="w-full rounded-full bg-[#39FF14] text-black font-bold text-sm py-4 hover:bg-[#39FF14]/90 transition">
+              {hasPaid? `Upgrade to ${selected} →` : `Select ${selected} →`}
+            </button>
+
+            <div className="mt-6 bg-black rounded-xl p-4 border border-zinc-800">
+              <div className="text-zinc-500 text-[11px] uppercase tracking-widest font-bold mb-2">Security Info</div>
+              <div className="text-zinc-400 text-xs leading-relaxed">Zero-knowledge encryption. Your silo stores only encrypted fragments. SIGILLUQ hosts cannot see, open or access your files. Redundant & blind by design. 616TB Network.</div>
+            </div>
           </div>
         </div>
+
+        <div className="text-center text-zinc-600 text-xs mt-12">SIGILLUQ • Patent Pending • 616TB Network • Encrypted & Distributed</div>
       </div>
     </div>
   )
