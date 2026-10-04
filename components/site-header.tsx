@@ -53,12 +53,12 @@ export function SiteHeader() {
             </>
           ) : (
             <>
-              <Link href="/choose-role">
+              <Link href="/signin">
                 <Button variant="ghost" className="rounded-full px-5 h-9 text-xs text-zinc-400 hover:text-white hover:bg-transparent">
                   Sign In
                 </Button>
               </Link>
-              <Link href="/choose-role">
+              <Link href="/signup">
                 <Button className="bg-[#39FF14] text-black hover:bg-[#39FF14]/90 rounded-full px-6 h-9 font-bold text-xs border-0">
                   Sign Up
                 </Button>
