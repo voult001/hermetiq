@@ -28,38 +28,38 @@ export function SiteHeader() {
   }
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-black/80 backdrop-blur-xl supports-[backdrop-filter]:bg-black/60">
-      <div className="container flex h-[64px] items-center justify-between px-4 md:px-6">
+    <header className="sticky top-0 z-50 w-full border-b border-zinc-800 bg-[#0a0a0a]">
+      <div className="max-w-6xl mx-auto flex h-14 items-center justify-between px-6">
         <Link href="/" className="flex items-center gap-3">
-          <span className="font-mono font-black tracking-[0.2em] text-[#39FF14] text-[18px]">
+          <span className="font-bold tracking-[0.2em] text-[#39FF14] text-[16px]">
             SIGILLUQ
           </span>
-          <span className="hidden md:block font-mono text-[10px] tracking-widest text-zinc-500 border-l border-white/10 pl-3">
+          <span className="hidden md:block text-[10px] tracking-widest text-zinc-500 border-l border-zinc-800 pl-3">
             616TB ENCRYPTED
           </span>
         </Link>
         <div className="flex items-center gap-3">
           {user? (
             <>
-              <span className="font-mono text-xs text-zinc-400 hidden lg:block max-w-[160px] truncate">{user.email}</span>
-              <Button onClick={handleSignOut} variant="outline" className="rounded-full px-5 h-9 font-mono text-xs border-white/20 bg-transparent text-white hover:bg-white hover:text-black">
+              <span className="text-xs text-zinc-400 hidden lg:block max-w-[160px] truncate">{user.email}</span>
+              <Button onClick={handleSignOut} variant="outline" className="rounded-full px-5 h-9 text-xs border-zinc-800 bg-transparent text-zinc-400 hover:text-white hover:border-zinc-700 hover:bg-transparent">
                 Sign Out
               </Button>
-              <Link href="/vault">
-                <Button className="rounded-full px-6 h-9 font-mono font-bold text-xs bg-[#39FF14] text-black hover:bg-[#39FF14]/90 border-0 shadow-[0_0_20px_rgba(57,255,20,0.3)]">
-                  Vault →
+              <Link href="/silo">
+                <Button className="rounded-full px-6 h-9 font-bold text-xs bg-[#39FF14] text-black hover:bg-[#39FF14]/90 border-0">
+                  Silo →
                 </Button>
               </Link>
             </>
           ) : (
             <>
-              <Link href="/signin">
-                <Button variant="ghost" className="rounded-full px-5 h-9 font-mono text-xs text-zinc-300 hover:text-white hover:bg-white/10">
+              <Link href="/choose-role">
+                <Button variant="ghost" className="rounded-full px-5 h-9 text-xs text-zinc-400 hover:text-white hover:bg-transparent">
                   Sign In
                 </Button>
               </Link>
-              <Link href="/signup">
-                <Button className="bg-[#39FF14] text-black hover:bg-[#39FF14]/90 rounded-full px-6 h-9 font-mono font-bold text-xs border-0 shadow-[0_0_20px_rgba(57,255,20,0.3)]">
+              <Link href="/choose-role">
+                <Button className="bg-[#39FF14] text-black hover:bg-[#39FF14]/90 rounded-full px-6 h-9 font-bold text-xs border-0">
                   Sign Up
                 </Button>
               </Link>
