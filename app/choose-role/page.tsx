@@ -6,7 +6,6 @@ export default function ChooseRolePage() {
   const router = useRouter()
   return (
     <div className="min-h-screen bg-black text-white">
-      {/* Header igual a tu site-header */}
       <div className="sticky top-0 z-50 w-full border-b border-white/10 bg-black/80 backdrop-blur">
         <div className="container flex h-14 items-center justify-between px-4 md:px-6">
           <Link href="/" className="font-mono font-bold tracking-widest text-[#39FF14]">SIGILLUQ</Link>
@@ -41,16 +40,16 @@ export default function ChooseRolePage() {
             </button>
           </div>
 
-          {/* CARD 2 - VAULT - MISMO VERDE */}
+          {/* CARD 2 - SILO - 616TB */}
           <div className="rounded-[20px] border border-white/10 bg-zinc-900/60 p-7 hover:border-[#39FF14]/30 transition-all">
             <div className="flex justify-between items-start mb-6">
               <div className="h-10 w-10 rounded-full bg-[#39FF14]/15 border border-[#39FF14]/20 flex items-center justify-center font-mono text-[#39FF14]">◍</div>
-              <span className="font-mono text-[10px] tracking-widest px-3 py-1 rounded-full border border-[#39FF14]/20 bg-[#39FF14]/10 text-[#39FF14]">VAULTS</span>
+              <span className="font-mono text-[10px] tracking-widest px-3 py-1 rounded-full border border-[#39FF14]/20 bg-[#39FF14]/10 text-[#39FF14]">616TB SILO</span>
             </div>
             <h2 className="font-mono font-bold text-lg tracking-widest mb-2">SECURE YOUR DATA</h2>
-            <p className="font-mono text-[13px] text-zinc-400 leading-relaxed mb-6">Military-grade encryption in a fleet of Sigilluq hosts. Encrypted by you, invisible to everyone.</p>
-            <button onClick={() => router.push('/vault')} className="w-full rounded-full bg-[#39FF14] text-black font-mono font-bold text-sm py-3.5 hover:bg-[#39FF14]/90 transition border-0">
-              Continue as Vault →
+            <p className="font-mono text-[13px] text-zinc-400 leading-relaxed mb-6">Military-grade encryption in a fleet of Sigilluq hosts. Encrypted by you, invisible to everyone. 616TB Encrypted.</p>
+            <button onClick={() => router.push('/silo')} className="w-full rounded-full bg-[#39FF14] text-black font-mono font-bold text-sm py-3.5 hover:bg-[#39FF14]/90 transition border-0">
+              Continue as Silo →
             </button>
           </div>
         </div>
