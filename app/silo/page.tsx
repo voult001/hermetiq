@@ -39,7 +39,6 @@ export default function SiloPage(){
 
   return (
     <div className="min-h-screen bg-black">
-      {/* HEADER - MISMO QUE HOST */}
       <div className="border-b border-zinc-800 bg-[#0a0a0a] sticky top-0 z-10">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -62,7 +61,6 @@ export default function SiloPage(){
         <h1 className="text-4xl font-bold text-white mb-2">Welcome back, Vault</h1>
         <p className="text-zinc-400 mb-10">Your SIGILLUQ Silo is encrypted & distributed across the network</p>
 
-        {/* 3 BIG CARDS - MISMO FORMATO QUE HOST */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
           <div className="bg-[#111] border border-zinc-800 rounded-[24px] p-8">
             <div className="flex justify-between items-start mb-6">
@@ -107,10 +105,8 @@ export default function SiloPage(){
           </div>
         </div>
 
-        {/* DRAG & DROP + FILES LIST + UPGRADE - MISMO GRID QUE HOST */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 space-y-6">
-            {/* UPLOAD AREA */}
             <div className="bg-[#111] border border-zinc-800 rounded-[24px] p-8">
               <h3 className="text-white font-bold text-xl mb-6">Upload Files</h3>
               <div
@@ -139,7 +135,6 @@ export default function SiloPage(){
               </div>
             </div>
 
-            {/* MY SILO FILES */}
             <div className="bg-[#111] border border-zinc-800 rounded-[24px] p-8">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-white font-bold text-xl">My Silo</h3>
@@ -164,10 +159,10 @@ export default function SiloPage(){
             </div>
           </div>
 
-          {/* UPGRADE PACKAGE - MISMO ESTILO QUE PAYOUT HISTORY */}
+          {/* SELECT STORAGE - ARREGLADO */}
           <div className="bg-[#111] border border-zinc-800 rounded-[24px] p-8 h-fit">
-            <h3 className="text-white font-bold text-xl mb-2">Upgrade Storage</h3>
-            <p className="text-zinc-500 text-xs mb-6">Select a plan to increase capacity</p>
+            <h3 className="text-white font-bold text-xl mb-2">Select Storage</h3>
+            <p className="text-zinc-500 text-xs mb-6">Select a plan to start</p>
 
             <div className="mb-6">
               <p className="text-[11px] font-bold text-zinc-400 uppercase tracking-widest mb-3">Small Package • Popular</p>
