@@ -58,7 +58,7 @@ export default function SiloPage(){
       </div>
 
       <div className="max-w-6xl mx-auto p-6 md:p-10">
-        <h1 className="text-4xl font-bold text-white mb-2">Welcome back, Vault</h1>
+        <h1 className="text-4xl font-bold text-white mb-2">Welcome to your Silo</h1>
         <p className="text-zinc-400 mb-10">Your SIGILLUQ Silo is encrypted & distributed across the network</p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
@@ -159,7 +159,6 @@ export default function SiloPage(){
             </div>
           </div>
 
-          {/* SELECT STORAGE - ARREGLADO */}
           <div className="bg-[#111] border border-zinc-800 rounded-[24px] p-8 h-fit">
             <h3 className="text-white font-bold text-xl mb-2">Select Storage</h3>
             <p className="text-zinc-500 text-xs mb-6">Select a plan to start</p>
