@@ -102,8 +102,8 @@ export default function SiloPage(){
             </div>
             <div className="text-zinc-400 text-sm mb-2">Current Plan</div>
             <div className="text-4xl font-bold text-white mb-1">{selected}</div>
-            <div className="text-sm text-zinc-500 mb-6">{hasPaid? 'Active • Encrypted & Distributed' : 'Select package below'}</div>
-            <div className="bg-zinc-900 rounded-xl p-3 text-xs text-zinc-400 flex items-center gap-2"><Upload className="w-4 h-4 text-zinc-500" /> {hasPaid? 'Drag & drop enabled' : 'Select package to unlock uploads'}</div>
+            <div className="text-sm text-zinc-500 mb-6">{hasPaid? 'Active • Encrypted & Distributed' : 'Select storage below'}</div>
+            <div className="bg-zinc-900 rounded-xl p-3 text-xs text-zinc-400 flex items-center gap-2"><Upload className="w-4 h-4 text-zinc-500" /> {hasPaid? 'Drag & drop enabled' : 'Select storage to unlock uploads'}</div>
           </div>
         </div>
 
@@ -122,8 +122,8 @@ export default function SiloPage(){
                 {!hasPaid? (
                   <>
                     <div className="w-16 h-16 bg-[#FFB020]/10 border border-[#FFB020]/20 rounded-2xl flex items-center justify-center mx-auto mb-4"><Lock className="w-8 h-8 text-[#FFB020]" /></div>
-                    <p className="font-bold text-[#FFB020] text-lg">Select Package First</p>
-                    <p className="text-zinc-500 text-sm mt-1">Select a storage package below to unlock uploads</p>
+                    <p className="font-bold text-[#FFB020] text-lg">Select Storage First</p>
+                    <p className="text-zinc-500 text-sm mt-1">Select storage below to unlock uploads</p>
                   </>
                 ) : (
                   <>
