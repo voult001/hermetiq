@@ -26,10 +26,9 @@ export default function ChooseRolePage() {
           <p className="text-sm text-zinc-500">Select how you want to use Sigilluq</p>
         </div>
 
-        {/* TODO CENTRADO - MISMO FORMATO QUE HOST */}
         <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto items-stretch">
 
-          {/* HOST - GRANDE */}
+          {/* HOST - TEXTO NUEVO */}
           <div className="bg-[#111] border border-zinc-800 rounded-[28px] p-10 min-h-[520px] flex flex-col justify-between">
             <div>
               <div className="flex items-center gap-3 mb-8">
@@ -37,19 +36,18 @@ export default function ChooseRolePage() {
                 <span className="text-[10px] tracking-widest px-3 py-1.5 rounded-full border border-zinc-800 bg-black text-zinc-500">HOSTS</span>
               </div>
               <h2 className="font-bold text-[22px] tracking-tight mb-4">EARN PASSIVE INCOME</h2>
-              <p className="text-[14px] text-zinc-400 leading-relaxed">Turn your extra storage into monthly revenue. Set your price, keep 90%.</p>
+              <p className="text-[14px] text-zinc-400 leading-relaxed">Turn extra storage into monthly revenue. The more you share, the more you earn.</p>
             </div>
             <button onClick={() => router.push('/host')} className="w-full rounded-full bg-[#39FF14] text-black font-bold text-[15px] py-4 mt-10 hover:bg-[#39FF14]/90 transition">
               Continue as Host →
             </button>
           </div>
 
-          {/* SILO - GRANDE - BADGE CERCA */}
+          {/* SILO */}
           <div className="bg-[#111] border border-zinc-800 rounded-[28px] p-10 min-h-[520px] flex flex-col justify-between">
             <div>
               <div className="flex items-center gap-3 mb-8">
                 <div className="h-12 w-12 rounded-2xl bg-[#39FF14]/10 border border-[#39FF14]/20 flex items-center justify-center text-[#39FF14] font-bold text-lg">◍</div>
-                {/* YA NO ESTA LEJOS - ESTA PEGADO AL ICONO */}
                 <span className="text-[10px] font-bold tracking-widest px-3 py-1.5 rounded-full border border-[#39FF14]/20 bg-[#39FF14]/10 text-[#39FF14]">616TB SILO</span>
               </div>
               <h2 className="font-bold text-[22px] tracking-tight mb-4">SECURE YOUR DATA</h2>
