@@ -4,8 +4,8 @@
 export const SIGILLIQ_CORE = {
   OVERHEAD: 1.5 as const, // NUNCA SE TOCA - base del margen $6.66
   TOTAL_SHARDS: 15 as const,
-  CHEAP_SHARDS: 12 as const, // Latam / Africa / Asia
-  SAFE_SHARDS: 3 as const,   // USA / EU obligatorios
+  CHEAP_SHARDS: 12 as const, // Latam / Africa / Asia - India, Brasil, Mexico, Arg, China
+  SAFE_SHARDS: 3 as const, // USA / EU obligatorios + Australia premium
   UNIT_GB: 50 as const,
 } as const;
 
@@ -16,17 +16,17 @@ export function getUnits(freeGB: number) {
 // TU FUNCION ORIGINAL - LA DEJAMOS INTACTA PARA NO ROMPER NADA
 export function rankHosts(hosts: any[]) {
   return hosts
-    .filter(h => h.online)
-    .map(h => ({
-      ...h,
+   .filter(h => h.online)
+   .map(h => ({
+     ...h,
       units: getUnits(h.freeGB),
       efficiency: h.speedMbps / h.pingMs
     }))
-    .filter(h => h.units > 0)
-    .sort((a,b) => b.efficiency - a.efficiency);
+   .filter(h => h.units > 0)
+   .sort((a,b) => b.efficiency - a.efficiency);
 }
 
-// --- NUEVO: SIGILLIQ SELECTOR V1 ---
+// --- SIGILLIQ SELECTOR V1 ---
 
 function getLatency(clientLoc: any, host: any): number {
   return host.pingMs || 999;
@@ -45,42 +45,38 @@ function dedupByHouse(hosts: any[]) {
 export function selectSigulliqHosts(clientLocation: any, allHosts: any[]) {
   const unique = dedupByHouse(allHosts.filter(h => h.online && getUnits(h.freeGB) > 0));
 
-  const cheapPool = unique.filter(h => !h.isUSA_EU);
+  const cheapPool = unique.filter(h =>!h.isUSA_EU);
   const safePool = unique.filter(h => h.isUSA_EU);
 
   if (safePool.length < SIGILLIQ_CORE.SAFE_SHARDS) {
     throw new Error(`Faltan Hosts USA/EU: necesitas ${SIGILLIQ_CORE.SAFE_SHARDS}, hay ${safePool.length}`);
   }
 
-  // 12 baratos: precio 70% + latencia 20% + %lleno 10%
   const scoredCheap = cheapPool.map(h => {
     const latency = getLatency(clientLocation, h);
     const percentFull = h.percentFull || (1 - h.freeGB / (h.totalGB || 1000));
     return {
-      ...h,
+     ...h,
       score: (h.pricePerGB * 0.7) + (latency * 0.2) + (percentFull * 100 * 0.1),
       _latency: latency,
     };
   }).sort((a,b) => a.score - b.score);
 
-  // 3 seguros: latencia 70% + %lleno 30%
   const scoredSafe = safePool.map(h => {
     const latency = getLatency(clientLocation, h);
     const percentFull = h.percentFull || 0;
     return {
-      ...h,
+     ...h,
       score: (latency * 0.7) + (percentFull * 100 * 0.3),
       _latency: latency,
     };
   }).sort((a,b) => a.score - b.score);
 
   const selected = [
-    ...scoredCheap.slice(0, SIGILLIQ_CORE.CHEAP_SHARDS),
-    ...scoredSafe.slice(0, SIGILLIQ_CORE.SAFE_SHARDS),
+   ...scoredCheap.slice(0, SIGILLIQ_CORE.CHEAP_SHARDS),
+   ...scoredSafe.slice(0, SIGILLIQ_CORE.SAFE_SHARDS),
   ];
 
-  // Validación final: 1.5x
-  // rawHost = sellable * 1.5  =>  sellable = rawHost / 1.5
   return {
     hosts: selected,
     meta: {
@@ -90,4 +86,20 @@ export function selectSigulliqHosts(clientLocation: any, allHosts: any[]) {
       safe: Math.min(scoredSafe.length, 3),
     }
   };
+}
+
+// --- NUEVO: FIX PARA PROBLEMA DE SHARD CAIDO - TIPO UBER ---
+// Esto es lo nuevo que me pediste, sin tocar el core de arriba
+export function replaceFailedShard(failedHostId: string, allHosts: any[], currentSelected: any[], clientLocation: any) {
+  const available = allHosts.filter(h => h.online && h.id!== failedHostId &&!currentSelected.some((s:any) => s.id === h.id));
+  if (available.length === 0) return null;
+
+  // Busca el más cercano del pool sobrante
+  const uniqueAvailable = dedupByHouse(available);
+  const scored = uniqueAvailable.map(h => ({
+   ...h,
+    _latency: getLatency(clientLocation, h)
+  })).sort((a,b) => a._latency - b._latency);
+
+  return scored[0];
 }
