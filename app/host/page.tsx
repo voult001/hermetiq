@@ -1,6 +1,6 @@
 "use client"
 import { useState, useEffect } from "react"
-import { HardDrive, DollarSign, Activity, Plus, LogOut, Server, TrendingUp } from "lucide-react"
+import { HardDrive, DollarSign, Activity, Plus, LogOut, TrendingUp } from "lucide-react"
 import { useRouter } from "next/navigation"
 
 export default function HostPage(){
@@ -9,10 +9,7 @@ export default function HostPage(){
   const [stats, setStats] = useState({ totalGB: 0, rentedGB: 0, earnings: 0, monthEarn: 0, silos: 0 })
 
   useEffect(() => {
-    // AQUÍ CONECTAS TU SCAN REAL
-    // const realData = await fetch('/api/host/stats').then(r=>r.json())
-    // setStats(realData)
-    // Por ahora queda en 0 hasta que el scan de data real
+    // conectar a /api/host/stats real
   }, [])
 
   const handleAddStorage = () => setShowTerms(true)
@@ -38,7 +35,7 @@ export default function HostPage(){
 
       <div className="max-w-6xl mx-auto p-6 md:p-10">
         <h1 className="text-4xl font-bold text-white mb-2">Welcome back, Host</h1>
-        <p className="text-zinc-400 mb-10">Patent Pending • V2 Global • Real scan only</p>
+        <p className="text-zinc-400 mb-10">Patent Pending • Encrypted & Distributed</p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
           <div className="bg-[#111] border border-zinc-800 rounded-[24px] p-8">
@@ -87,15 +84,20 @@ export default function HostPage(){
           </button>
         </div>
 
-        <div className="text-center text-zinc-600 text-xs mt-12">SIGILLUQ • Patent Pending • V2 • Zero fake data</div>
+        <div className="text-center text-zinc-600 text-xs mt-12">SIGILLUQ • Patent Pending • Encrypted & Distributed</div>
       </div>
 
       {showTerms && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur z-50 flex items-center justify-center p-6">
           <div className="bg-[#111] border border-zinc-800 rounded-[24px] p-8 max-w-lg w-full">
             <h3 className="text-white font-bold text-xl mb-4">Storage Scan Authorization</h3>
-            <div className="text-zinc-400 text-sm leading-relaxed mb-6">
-              You authorize SIGILLIQ to scan ONLY allocated space. No personal files. Uber-type allocation 12/3.
+            <div className="text-zinc-400 text-sm leading-relaxed mb-6 space-y-3">
+              <p>By adding storage, you authorize SIGILLIQ to:</p>
+              <p>1. Scan and measure ONLY the storage space you voluntarily allocate.</p>
+              <p>2. Test speed, availability and secure allocation for distributed storage.</p>
+              <p>3. Verify device uniqueness to prevent fraud.</p>
+              <p>4. We NEVER access your personal files. Only assigned space.</p>
+              <p className="text-zinc-500 text-xs">Revocable anytime by uninstalling the Node. Patent Pending.</p>
             </div>
             <div className="flex gap-3">
               <button onClick={() => setShowTerms(false)} className="flex-1 bg-zinc-900 text-zinc-400 py-3 rounded-xl font-bold">Cancel</button>
