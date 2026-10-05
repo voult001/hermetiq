@@ -28,7 +28,7 @@ export default function ChooseRolePage() {
 
         <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto items-stretch">
 
-          {/* 1 - HOST - SE QUEDA COMO DIJISTE */}
+          {/* HOST - B + C COMBINADAS */}
           <div className="bg-[#111] border border-zinc-800 rounded-[28px] p-10 min-h-[520px] flex flex-col justify-between">
             <div>
               <div className="flex items-center gap-3 mb-8">
@@ -36,14 +36,14 @@ export default function ChooseRolePage() {
                 <span className="text-[10px] tracking-widest px-3 py-1.5 rounded-full border border-zinc-800 bg-black text-zinc-500">HOSTS</span>
               </div>
               <h2 className="font-bold text-[22px] tracking-tight mb-4">EARN PASSIVE INCOME</h2>
-              <p className="text-[14px] text-zinc-400 leading-relaxed">Military-grade encryption in a fleet of private hosts. Encrypted by you, invisible to everyone else.</p>
+              <p className="text-[14px] text-zinc-400 leading-relaxed">Turn idle storage into monthly income. Enterprise clients pay you to host encrypted data. Your extra space is money — secure, automatic, passive.</p>
             </div>
             <button onClick={() => router.push('/host')} className="w-full rounded-full bg-[#39FF14] text-black font-bold text-[15px] py-4 mt-10 hover:bg-[#39FF14]/90 transition">
               Continue as Host →
             </button>
           </div>
 
-          {/* 2 - SILO - COMO DIJISTE EN AUDIO - hosted worldwide */}
+          {/* SILO - COMBINADO V2 */}
           <div className="bg-[#111] border border-zinc-800 rounded-[28px] p-10 min-h-[520px] flex flex-col justify-between">
             <div>
               <div className="flex items-center gap-3 mb-8">
@@ -51,7 +51,7 @@ export default function ChooseRolePage() {
                 <span className="text-[10px] font-bold tracking-widest px-3 py-1.5 rounded-full border border-[#39FF14]/20 bg-[#39FF14]/10 text-[#39FF14]">V2 SILO</span>
               </div>
               <h2 className="font-bold text-[22px] tracking-tight mb-4">SECURE YOUR DATA</h2>
-              <p className="text-[14px] text-zinc-400 leading-relaxed">Store like you own the internet. Private, encrypted, hosted worldwide.</p>
+              <p className="text-[14px] text-zinc-400 leading-relaxed">Military-grade encryption in a fleet of private hosts. Encrypted by you, invisible to everyone else. Store like you own the internet. Private, encrypted, hosted worldwide.</p>
             </div>
             <button onClick={() => router.push('/silo')} className="w-full rounded-full bg-[#39FF14] text-black font-bold text-[15px] py-4 mt-10 hover:bg-[#39FF14]/90 transition">
               Continue as Silo →
