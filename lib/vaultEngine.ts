@@ -1,5 +1,6 @@
-// lib/vaultEngine.ts - HERMETIQ / SIGILLIQ V2 GLOBAL
+// lib/vaultEngine.ts - HERMETIQ / SIGILLIQ V2 GLOBAL - V1.1 FINAL BLOQUEADO
 // SELL WHOLE, FRAGMENT INTERNALLY - 50GB shards - AUTHORIZE ONLY AFTER PAYMENT=TRUE
+// PATENT PENDING - SIGILLIQ CORE - INMUTABLE
 
 // --- SIGILLIQ CORE - INMUTABLE - NO SE TOCA ---
 export const SIGILLIQ_CORE = {
@@ -20,7 +21,7 @@ export type Vault = {
   totalGB?: number;
   pricePerGB?: number;
   isUSA_EU?: boolean;
-  isPremium?: boolean; // AUSTRALIA PREMIUM
+  isPremium?: boolean;
   isCanada?: boolean;
   online?: boolean;
   houseId?: string;
@@ -68,9 +69,8 @@ function dedupByHouse(hosts: Vault[]) {
 export function selectSigulliqHosts(clientLocation: { lat: number; lng: number }, allHosts: Vault[]) {
   const unique = dedupByHouse(allHosts.filter(h => h.online!== false && getUnits(h.freeGB || 0) > 0));
 
-  // CLASIFICACION GLOBAL COMO ME PEDISTE
-  const cheapPool = unique.filter(h =>!h.isUSA_EU &&!h.isPremium &&!h.isCanada); // India, Brasil, Mexico, Argentina, Latam, China, etc
-  const safePool = unique.filter(h => h.isUSA_EU || h.isCanada || h.isPremium); // EU, Canada, USA + Australia Premium
+  const cheapPool = unique.filter(h =>!h.isUSA_EU &&!h.isPremium &&!h.isCanada);
+  const safePool = unique.filter(h => h.isUSA_EU || h.isCanada || h.isPremium);
 
   if (safePool.length < SIGILLIQ_CORE.SAFE_SHARDS) {
     console.warn(`Faltan Hosts SAFE: necesitas ${SIGILLIQ_CORE.SAFE_SHARDS}, hay ${safePool.length}`);
@@ -86,14 +86,13 @@ export function selectSigulliqHosts(clientLocation: { lat: number; lng: number }
   const scoredSafe = safePool.map(h => {
     const dist = haversineKm(clientLocation.lat, clientLocation.lng, h.lat, h.lng);
     const percentFull = h.percentFull || 0;
-    // En SAFE/PRIORITY, priorizamos distancia 60% + lleno 20% + premium boost 20%
-    const premiumBoost = h.isPremium? -100 : 0; // Australia siempre gana
+    const premiumBoost = h.isPremium? -100 : 0;
     return {...h, score: (dist * 0.6) + (percentFull * 100 * 0.2) + premiumBoost, _dist: dist };
   }).sort((a,b) => a.score - b.score);
 
   const selected = [
-   ...scoredCheap.slice(0, SIGILLIQ_CORE.CHEAP_SHARDS),
-   ...scoredSafe.slice(0, SIGILLIQ_CORE.SAFE_SHARDS),
+  ...scoredCheap.slice(0, SIGILLIQ_CORE.CHEAP_SHARDS),
+  ...scoredSafe.slice(0, SIGILLIQ_CORE.SAFE_SHARDS),
   ];
 
   return {
@@ -102,20 +101,43 @@ export function selectSigulliqHosts(clientLocation: { lat: number; lng: number }
   };
 }
 
-// --- FAILOVER TIPO UBER: REEMPLAZO MAS CERCANO ---
+// --- DOBLE VELOCIDAD - INMUTABLE - PARALELO TOTAL ---
+export async function uploadDoubleSpeed(
+  chunkFile: (file: Buffer, unit: number) => Buffer[],
+  uploadToHost: (host: Vault, chunk: Buffer) => Promise<any>,
+  file: Buffer,
+  clientLocation: { lat: number; lng: number },
+  allHosts: Vault[]
+) {
+  const { hosts } = selectSigulliqHosts(clientLocation, allHosts)
+  if (hosts.length < SIGILLIQ_CORE.TOTAL_SHARDS) throw new Error('SIGILLIQ CORE: faltan hosts para 15')
+
+  const chunks = chunkFile(file, SIGILLIQ_CORE.UNIT_GB)
+
+  // LOS 2 POOLS AL MISMO TIEMPO - x2 VELOCIDAD
+  const cheapUploads = hosts.slice(0,12).map((h,i) => uploadToHost(h, chunks[i]))
+  const safeUploads = hosts.slice(12,15).map((h,i) => uploadToHost(h, chunks[12+i]))
+
+  const [cheapResults, safeResults] = await Promise.all([
+    Promise.allSettled(cheapUploads),
+    Promise.allSettled(safeUploads)
+  ])
+
+  const all = [...cheapResults,...safeResults]
+  const failed = all.filter(r => r.status === 'rejected')
+  if (failed.length > 5) throw new Error(`Fallo crítico: ${failed.length} shards caídos`)
+
+  return all
+}
+
+// --- FAILOVER TIPO UBER ---
 export function replaceFailedHost(failedVaultId: string, allVaults: Vault[], currentHosts: Vault[], clientLocation: { lat: number; lng: number }): Vault | null {
   const available = allVaults.filter(h => h.id!== failedVaultId &&!currentHosts.some(c => c.id === h.id) && h.online!== false);
   if (available.length === 0) return null;
-
-  const scored = available.map(h => ({
-   ...h,
-    _dist: haversineKm(clientLocation.lat, clientLocation.lng, h.lat, h.lng)
-  })).sort((a,b) => a._dist - b._dist);
-
+  const scored = available.map(h => ({...h, _dist: haversineKm(clientLocation.lat, clientLocation.lng, h.lat, h.lng)})).sort((a,b) => a._dist - b._dist);
   return scored[0] || null;
 }
 
-// --- PACKAGE LOGIC ---
 export function createPackage(totalGB: number, price: number): Allocation {
   const rawGB = totalGB * SIGILLIQ_CORE.OVERHEAD;
   const shardCount = Math.ceil(rawGB / SHARD_SIZE);
@@ -129,9 +151,9 @@ export function createPackage(totalGB: number, price: number): Allocation {
 export function authorizeAndFragment(allocation: Allocation, allVaults: Vault[], clientLocation: { lat: number; lng: number }): Allocation {
   const { hosts } = selectSigulliqHosts(clientLocation, allVaults);
   return {
-   ...allocation, status: 'authorized',
+  ...allocation, status: 'authorized',
     shards: allocation.shards.map((shard, i) => ({
-     ...shard, vaultId: hosts[i % hosts.length]?.id || `vault_${i}`, hostId: hosts[i % hosts.length]?.id,
+    ...shard, vaultId: hosts[i % hosts.length]?.id || `vault_${i}`, hostId: hosts[i % hosts.length]?.id,
     })),
   };
 }
