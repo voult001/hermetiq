@@ -1,17 +1,13 @@
 "use client"
 import { useState } from "react"
 import { HardDrive, Shield, Lock, Plus, Server, Upload, File, Folder } from "lucide-react"
+import { SiteHeader } from "@/components/site-header"
 
 export default function SiloPage(){
   const [selected, setSelected] = useState("100GB")
   const [hasPaid, setHasPaid] = useState(false)
   const [dragOver, setDragOver] = useState(false)
-  const [files, setFiles] = useState([
-    { name: "Contracts", detail: "12 items • 3.2 GB", icon: "folder" },
-    { name: "Q4_Financial_Report.pdf", detail: "2 days ago • 24.8 MB", icon: "file" },
-    { name: "Product_Assets", detail: "87 items • 1.1 GB", icon: "folder" },
-    { name: "Investor_Deck_v3.pptx", detail: "1 week ago • 8.3 MB", icon: "file" },
-  ])
+  const [files, setFiles] = useState<{ name: string; detail: string; icon: string }[]>([])
 
   const small = [
     { id: "100GB", price: "$9 /mo" },
@@ -37,6 +33,7 @@ export default function SiloPage(){
 
   return (
     <div className="min-h-screen bg-black">
+      <SiteHeader />
       <div className="max-w-6xl mx-auto p-6 md:p-10">
         <h1 className="text-4xl font-bold text-white mb-2">Welcome to your Silo</h1>
         <p className="text-zinc-400 mb-10">Your SIGILLUQ Silo is encrypted & distributed across the network</p>
@@ -50,10 +47,10 @@ export default function SiloPage(){
               <span className="text-[10px] bg-[#39FF14]/10 text-[#39FF14] border border-[#39FF14]/20 px-3 py-1 rounded-full font-bold">{files.length} FILES</span>
             </div>
             <div className="text-zinc-400 text-sm mb-2">Storage Usage</div>
-            <div className="text-4xl font-bold text-white mb-1">62%</div>
-            <div className="text-sm text-zinc-500 mb-6">1.24 TB / 2 TB used</div>
+            <div className="text-4xl font-bold text-white mb-1">{files.length === 0? '0%' : '12%'}</div>
+            <div className="text-sm text-zinc-500 mb-6">{files.length === 0? '0 GB / ' + selected + ' used' : '0.2 GB / ' + selected + ' used'}</div>
             <div className="w-full bg-zinc-800 h-2.5 rounded-full overflow-hidden">
-              <div className="bg-[#39FF14] h-full w-[62%] shadow-[0_0_10px_#39FF14]"></div>
+              <div className="bg-[#39FF14] h-full shadow-[0_0_10px_#39FF14]" style={{width: files.length === 0? '0%' : '12%'}}></div>
             </div>
           </div>
 
@@ -76,10 +73,10 @@ export default function SiloPage(){
               <div className="w-12 h-12 bg-[#39FF14]/10 border border-[#39FF14]/20 rounded-2xl flex items-center justify-center">
                 <Server className="w-6 h-6 text-[#39FF14]" />
               </div>
-              <div className="flex items-center gap-2"><div className="w-2.5 h-2.5 bg-[#39FF14] rounded-full animate-pulse"></div><span className="text-[#39FF14] text-xs font-bold">616TB NETWORK</span></div>
+              <div className="flex items-center gap-2"><div className="w-2.5 h-2.5 bg-[#39FF14] rounded-full animate-pulse"></div><span className="text-[#39FF14] text-xs font-bold">NETWORK</span></div>
             </div>
             <div className="text-zinc-400 text-sm mb-2">Current Plan</div>
-            <div className="text-4xl font-bold text-white mb-1">{selected}</div>
+            <div className="text-4xl font-bold text-white mb-1">{hasPaid? selected : 'No Plan'}</div>
             <div className="text-sm text-zinc-500 mb-6">{hasPaid? 'Active • Encrypted & Distributed' : 'Select storage below'}</div>
             <div className="bg-zinc-900 rounded-xl p-3 text-xs text-zinc-400 flex items-center gap-2"><Upload className="w-4 h-4 text-zinc-500" /> {hasPaid? 'Drag & drop enabled' : 'Select storage to unlock uploads'}</div>
           </div>
@@ -121,17 +118,21 @@ export default function SiloPage(){
                 <span className="text-zinc-500 text-sm">{files.length} items • Encrypted</span>
               </div>
               <div className="space-y-3">
-                {files.map((f,i)=>(
-                  <div key={i} className="bg-black border border-zinc-800 rounded-2xl p-4 flex items-center justify-between hover:border-zinc-700 transition">
-                    <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 bg-zinc-800 rounded-xl flex items-center justify-center">
-                        {f.icon === 'folder'? <Folder className="w-5 h-5 text-zinc-400" /> : <File className="w-5 h-5 text-zinc-400" />}
+                {files.length === 0? (
+                  <div className="bg-black border border-dashed border-zinc-800 rounded-2xl p-8 text-center text-zinc-600 text-sm">No files yet. Upload your first encrypted file.</div>
+                ) : (
+                  files.map((f,i)=>(
+                    <div key={i} className="bg-black border border-zinc-800 rounded-2xl p-4 flex items-center justify-between hover:border-zinc-700 transition">
+                      <div className="flex items-center gap-4">
+                        <div className="w-10 h-10 bg-zinc-800 rounded-xl flex items-center justify-center">
+                          {f.icon === 'folder'? <Folder className="w-5 h-5 text-zinc-400" /> : <File className="w-5 h-5 text-zinc-400" />}
+                        </div>
+                        <div><div className="text-white font-bold text-sm">{f.name}</div><div className="text-zinc-500 text-xs">{f.detail}</div></div>
                       </div>
-                      <div><div className="text-white font-bold text-sm">{f.name}</div><div className="text-zinc-500 text-xs">{f.detail}</div></div>
+                      <div className="text-[#39FF14] text-xs">🔒</div>
                     </div>
-                    <div className="text-[#39FF14] text-xs">🔒</div>
-                  </div>
-                ))}
+                  ))
+                )}
               </div>
               <button className="w-full mt-6 border border-dashed border-[#39FF14]/40 bg-[#39FF14]/5 hover:bg-[#39FF14]/10 text-[#39FF14] font-bold py-4 rounded-2xl flex items-center justify-center gap-2 transition">
                 <Plus className="w-5 h-5" /> New Folder
@@ -153,25 +154,18 @@ export default function SiloPage(){
               ))}
             </div>
 
-            <div className="opacity-60 mb-6">
-              <p className="text-[11px] font-bold text-zinc-400 uppercase tracking-widest mb-3">Big Package • Enterprise</p>
-              {[["10TB","$249 /mo"],["100TB","$1,999 /mo"],["500TB","$7,500 /mo"]].map(([id,price])=>(
-                <div key={id} className="flex justify-between items-center p-4 rounded-2xl border border-zinc-800 bg-black mb-3 text-sm"><span className="flex gap-3"><span className="w-5 h-5 rounded-full border border-zinc-700"></span><span className="text-zinc-500">{id}</span></span><span className="text-zinc-600 text-xs">{price}</span></div>
-              ))}
-            </div>
-
             <button onClick={handlePay} className="w-full rounded-full bg-[#39FF14] text-black font-bold text-sm py-4 hover:bg-[#39FF14]/90 transition">
               {hasPaid? `Upgrade to ${selected} →` : `Select ${selected} →`}
             </button>
 
             <div className="mt-6 bg-black rounded-xl p-4 border border-zinc-800">
               <div className="text-zinc-500 text-[11px] uppercase tracking-widest font-bold mb-2">Security Info</div>
-              <div className="text-zinc-400 text-xs leading-relaxed">Zero-knowledge encryption. Your silo stores only encrypted fragments. SIGILLUQ hosts cannot see, open or access your files. Redundant & blind by design. 616TB Network.</div>
+              <div className="text-zinc-400 text-xs leading-relaxed">Zero-knowledge encryption. Your silo stores only encrypted fragments. SIGILLUQ hosts cannot see, open or access your files. Redundant & blind by design.</div>
             </div>
           </div>
         </div>
 
-        <div className="text-center text-zinc-600 text-xs mt-12">SIGILLUQ • Patent Pending • 616TB Network • Encrypted & Distributed</div>
+        <div className="text-center text-zinc-600 text-xs mt-12">SIGILLUQ • Patent Pending • Encrypted & Distributed</div>
       </div>
     </div>
   )
