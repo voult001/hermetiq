@@ -1,10 +1,8 @@
 "use client"
 import { useState, useEffect } from "react"
-import { HardDrive, DollarSign, Activity, Plus, LogOut, TrendingUp } from "lucide-react"
-import { useRouter } from "next/navigation"
+import { HardDrive, DollarSign, Activity, Plus, TrendingUp } from "lucide-react"
 
 export default function HostPage(){
-  const router = useRouter()
   const [showTerms, setShowTerms] = useState(false)
   const [stats, setStats] = useState({ totalGB: 0, rentedGB: 0, earnings: 0, monthEarn: 0, silos: 0 })
 
@@ -20,19 +18,6 @@ export default function HostPage(){
 
   return (
     <div className="min-h-screen bg-black">
-      <div className="border-b border-zinc-800 bg-[#0a0a0a] sticky top-0 z-10">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-[#39FF14] rounded-lg flex items-center justify-center font-black text-black">S</div>
-            <span className="text-white font-bold">SIGILLUQ</span>
-            <span className="text-zinc-600 text-sm ml-2">Host • Patent Pending</span>
-          </div>
-          <button onClick={() => router.push('/')} className="flex items-center gap-2 text-zinc-400 hover:text-white text-sm border border-zinc-800 px-4 py-2 rounded-full">
-            <LogOut className="w-4 h-4" /> Sign Out
-          </button>
-        </div>
-      </div>
-
       <div className="max-w-6xl mx-auto p-6 md:p-10">
         <h1 className="text-4xl font-bold text-white mb-2">Welcome back, Host</h1>
         <p className="text-zinc-400 mb-10">Patent Pending • Encrypted & Distributed</p>
