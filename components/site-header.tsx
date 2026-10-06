@@ -3,6 +3,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { useEffect, useState } from "react"
 import { createClient } from "@supabase/supabase-js"
+import { useRouter } from "next/navigation"
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -11,6 +12,7 @@ const supabase = createClient(
 
 export function SiteHeader() {
   const [user, setUser] = useState<any>(null)
+  const router = useRouter()
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -24,6 +26,8 @@ export function SiteHeader() {
 
   const handleSignOut = async () => {
     await supabase.auth.signOut()
+    router.push('/')
+    router.refresh()
     window.location.href = '/'
   }
 
