@@ -50,7 +50,7 @@ export function SiteHeader() {
                 Sign Out
               </Button>
               <Link href="/silo">
-                <Button className="rounded-full px-6 h-9 font-bold text-xs bg-[#39FF14] text-black hover:bg-[#39FF14]/90 border-0">
+                <Button className="rounded-full px-6 h-9 font-bold text-xs bg-[#39FF14] text-black hover:bg-[#39FF14]/90 border-0 shadow-[0_0_15px_rgba(57,255,20,0.3)]">
                   Silo →
                 </Button>
               </Link>
@@ -63,7 +63,7 @@ export function SiteHeader() {
                 </Button>
               </Link>
               <Link href="/signup">
-                <Button className="bg-[#39FF14] text-black hover:bg-[#39FF14]/90 rounded-full px-6 h-9 font-bold text-xs border-0">
+                <Button className="bg-[#39FF14] text-black hover:bg-[#39FF14]/90 rounded-full px-6 h-9 font-bold text-xs border-0 shadow-[0_0_15px_rgba(57,255,20,0.3)]">
                   Sign Up
                 </Button>
               </Link>
