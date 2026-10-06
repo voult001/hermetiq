@@ -11,16 +11,17 @@ export async function middleware(req: NextRequest) {
       cookies: {
         getAll() { return req.cookies.getAll() },
         setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value }) => req.cookies.set(name, value))
+          cookiesToSet.forEach(({ name, value, options }) => req.cookies.set(name, value, options))
           res = NextResponse.next({ request: { headers: req.headers } })
           cookiesToSet.forEach(({ name, value, options }) => res.cookies.set(name, value, options))
         },
       },
     }
   )
-  await supabase.auth.getSession()
+  await supabase.auth.getUser()
   return res
 }
+
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico|.\\.(?:svg|png|jpg|jpeg|gif|webp)$).)'],
+  matcher: ['/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)'],
 }
