@@ -7,6 +7,10 @@ export function SiteHeader() {
   const pathname = usePathname()
   const isHome = pathname === "/"
 
+  const handleSignOut = () => {
+    window.location.replace("/")
+  }
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-zinc-800 bg-[#0a0a0a]">
       <div className="max-w-6xl mx-auto flex h-14 items-center justify-between px-6">
@@ -33,7 +37,11 @@ export function SiteHeader() {
             </Link>
           </div>
         ) : (
-          <div></div>
+          <div className="flex items-center gap-3">
+            <Button onClick={handleSignOut} variant="ghost" className="rounded-full px-5 h-9 text-xs text-zinc-400 hover:text-white hover:bg-transparent">
+              Sign Out
+            </Button>
+          </div>
         )}
       </div>
     </header>
