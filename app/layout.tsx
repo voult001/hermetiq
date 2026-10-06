@@ -2,7 +2,6 @@ import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Space_Grotesk, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
-import { SiteHeader } from '@/components/site-header'
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
@@ -51,7 +50,6 @@ export default function RootLayout({
   return (
     <html lang="en" className={`vault ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}>
       <body className="antialiased font-sans bg-black">
-        <SiteHeader />
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
