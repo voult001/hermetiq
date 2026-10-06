@@ -1,10 +1,8 @@
 "use client"
 import { useState } from "react"
-import { HardDrive, Shield, Lock, Plus, LogOut, Server, Upload, File, Folder } from "lucide-react"
-import { useRouter } from "next/navigation"
+import { HardDrive, Shield, Lock, Plus, Server, Upload, File, Folder } from "lucide-react"
 
 export default function SiloPage(){
-  const router = useRouter()
   const [selected, setSelected] = useState("100GB")
   const [hasPaid, setHasPaid] = useState(false)
   const [dragOver, setDragOver] = useState(false)
@@ -39,24 +37,6 @@ export default function SiloPage(){
 
   return (
     <div className="min-h-screen bg-black">
-      <div className="border-b border-zinc-800 bg-[#0a0a0a] sticky top-0 z-10">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-[#39FF14] rounded-lg flex items-center justify-center font-black text-black">S</div>
-            <span className="text-white font-bold">SIGILLUQ</span>
-            <span className="text-zinc-600 text-sm ml-2">Silo • 616TB Encrypted</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <button onClick={() => router.push('/choose-role')} className="text-zinc-400 hover:text-white text-sm border border-zinc-800 px-4 py-2 rounded-full hover:border-zinc-700">
-              ← Go Back
-            </button>
-            <button onClick={() => router.push('/')} className="flex items-center gap-2 text-zinc-400 hover:text-white text-sm border border-zinc-800 px-4 py-2 rounded-full hover:border-zinc-700">
-              <LogOut className="w-4 h-4" /> Sign Out
-            </button>
-          </div>
-        </div>
-      </div>
-
       <div className="max-w-6xl mx-auto p-6 md:p-10">
         <h1 className="text-4xl font-bold text-white mb-2">Welcome to your Silo</h1>
         <p className="text-zinc-400 mb-10">Your SIGILLUQ Silo is encrypted & distributed across the network</p>
