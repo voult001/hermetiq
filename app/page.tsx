@@ -1,3 +1,5 @@
+"use client"
+
 export function DualSilo() {
   return (
     <section className="grid grid-cols-1 md:grid-cols-2 min-h-[80vh] border-t border-white/10">
@@ -9,7 +11,7 @@ export function DualSilo() {
         <p className="mt-6 text-lg text-white/60 max-w-md leading-relaxed">
           S3 charges $23 and sees your data. Your Silo is much cheaper and even SIGILLUQ can't open it. Zero-Knowledge.
         </p>
-        <a href="/sign-up?role=silo" className="mt-8 inline-flex w-fit bg-[#4ADE80] text-black px-8 py-4 rounded-xl font-semibold hover:bg-[#22c55e] transition">
+        <a href="/signup?role=silo" className="mt-8 inline-flex w-fit bg-[#4ADE80] text-black px-8 py-4 rounded-xl font-semibold hover:bg-[#22c55e] transition">
           Create Your Silo
         </a>
       </div>
@@ -22,7 +24,7 @@ export function DualSilo() {
         <p className="mt-6 text-lg text-white/60 max-w-md leading-relaxed">
           Rent the TBs you don't use. Monthly payouts.
         </p>
-        <a href="/sign-up?role=host" className="mt-8 inline-flex w-fit border border-[#4ADE80] text-[#4ADE80] px-8 py-4 rounded-xl font-semibold hover:bg-[#4ADE80]/10 transition">
+        <a href="/signup?role=host" className="mt-8 inline-flex w-fit border border-[#4ADE80] text-[#4ADE80] px-8 py-4 rounded-xl font-semibold hover:bg-[#4ADE80]/10 transition">
           Become a Host
         </a>
       </div>
