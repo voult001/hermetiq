@@ -1,6 +1,6 @@
 "use client"
 
-export function DualSilo() {
+export default function Page() {
   return (
     <section className="grid grid-cols-1 md:grid-cols-2 min-h-[80vh] border-t border-white/10">
       {/* LADO 1 - CLIENTE */}
