@@ -1,7 +1,7 @@
 "use client"
 import { useState } from "react"
 import { Eye, EyeOff } from "lucide-react"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { createClient } from "@supabase/supabase-js"
 
 const supabase = createClient(
@@ -18,6 +18,7 @@ export default function AuthPage() {
   const [showConfirm, setShowConfirm] = useState(false)
   const [loading, setLoading] = useState(false)
   const router = useRouter()
+  const searchParams = useSearchParams()
 
   const inputClass = "w-full p-3 bg-zinc-900 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:border-[#39FF14]"
 
@@ -30,14 +31,67 @@ export default function AuthPage() {
     setLoading(true)
     try {
       if (mode === "signup") {
-        const { error } = await supabase.auth.signUp({ email, password })
+        const { data, error } = await supabase.auth.signUp({ email, password })
         if (error) throw error
+        
+        // Si viene de tarjeta de AFUERA, guardamos su rol desde ya
+        const role = searchParams.get('role')
+        const from = searchParams.get('from')
+        if(from === 'card' && role && data.user){
+          await supabase.from('profiles').insert({ 
+            id: data.user.id, 
+            email: email, 
+            role: role // host o guest
+          })
+        }
+
         alert("Cuenta creada! Revisa info@sigilluq.com")
-        setMode("signin")
+        // Si vino de tarjeta de afuera, lo dejamos listo para entrar directo
+        const r = searchParams.get('role')
+        const f = searchParams.get('from')
+        if(f === 'card' && r){
+          router.push(`/signin?role=${r}&from=card`)
+        } else {
+          setMode("signin")
+        }
       } else {
-        const { error } = await supabase.auth.signInWithPassword({ email, password })
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password })
         if (error) throw error
-        router.push("/")
+
+        // --- FILTRO OBLIGATORIO JEFE, POR EMAIL ---
+        const userEmail = data.user?.email || email
+        
+        // 1. ¿Cliente viejo? Identificar por email
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('role')
+          .eq('email', userEmail)
+          .single()
+
+        if(profile?.role === 'host'){
+          router.push("/host")
+          return
+        }
+        if(profile?.role === 'guest' || profile?.role === 'store' || profile?.role === 'silo'){
+          router.push("/store")
+          return
+        }
+
+        // 2. ¿Viene de tarjeta de AFUERA? Respetar
+        const role = searchParams.get('role')
+        const from = searchParams.get('from')
+
+        if(from === 'card' && role === 'host'){
+          router.push("/host")
+          return
+        }
+        if(from === 'card' && role === 'guest'){
+          router.push("/store")
+          return
+        }
+
+        // 3. Genérico -> obligado al filtro adentro
+        router.push("/choose-role")
       }
     } catch (err: any) {
       alert(err.message)
