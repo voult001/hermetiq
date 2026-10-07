@@ -1,7 +1,7 @@
 "use client"
 import { useState } from "react"
 import { Eye, EyeOff } from "lucide-react"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { supabase } from "@/lib/supabase"
 
 export default function SignInPage(){
@@ -10,16 +10,51 @@ export default function SignInPage(){
   const [password, setPassword] = useState("")
   const [loading, setLoading] = useState(false)
   const router = useRouter()
+  const searchParams = useSearchParams()
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
-    const { error } = await supabase.auth.signInWithPassword({ email, password })
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password })
     if(error){
       alert(error.message)
       setLoading(false)
       return
     }
+
+    // --- TU FILTRO OBLIGATORIO JEFE ---
+    const userEmail = data.user?.email || email
+    
+    // 1. ¿Es cliente viejo? Identificar por email como pediste
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('role')
+      .eq('email', userEmail)
+      .single()
+
+    if(profile?.role === 'host'){
+      router.push("/host")
+      return
+    }
+    if(profile?.role === 'guest' || profile?.role === 'store' || profile?.role === 'silo'){
+      router.push("/store")
+      return
+    }
+
+    // 2. ¿Viene de la tarjeta de AFUERA? Respetar lo que clicó afuera
+    const role = searchParams.get('role')
+    const from = searchParams.get('from')
+    
+    if(from === 'card' && role === 'host'){
+      router.push("/host")
+      return
+    }
+    if(from === 'card' && role === 'guest'){
+      router.push("/store")
+      return
+    }
+
+    // 3. Si entró por Sign In genérico de arriba, sin haber escogido afuera -> ADENTRO le toca choose-role
     router.push("/choose-role")
   }
 
