@@ -1,5 +1,7 @@
+export const dynamic = 'force-dynamic'
+
 "use client"
-import { useState } from "react"
+import { useState, Suspense } from "react"
 import { Eye, EyeOff } from "lucide-react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { createClient } from "@supabase/supabase-js"
@@ -9,7 +11,7 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 )
 
-export default function AuthPage() {
+function AuthContent() {
   const [mode, setMode] = useState<"signin" | "signup">("signup")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -34,19 +36,19 @@ export default function AuthPage() {
         const { data, error } = await supabase.auth.signUp({ email, password })
         if (error) throw error
         
-        // Si viene de tarjeta de AFUERA, guardamos su rol desde ya
         const role = searchParams.get('role')
         const from = searchParams.get('from')
         if(from === 'card' && role && data.user){
-          await supabase.from('profiles').insert({ 
-            id: data.user.id, 
-            email: email, 
-            role: role // host o guest
-          })
+          try {
+            await supabase.from('profiles').insert({ 
+              id: data.user.id, 
+              email: email, 
+              role: role
+            })
+          } catch {}
         }
 
         alert("Cuenta creada! Revisa info@sigilluq.com")
-        // Si vino de tarjeta de afuera, lo dejamos listo para entrar directo
         const r = searchParams.get('role')
         const f = searchParams.get('from')
         if(f === 'card' && r){
@@ -58,26 +60,25 @@ export default function AuthPage() {
         const { data, error } = await supabase.auth.signInWithPassword({ email, password })
         if (error) throw error
 
-        // --- FILTRO OBLIGATORIO JEFE, POR EMAIL ---
         const userEmail = data.user?.email || email
         
-        // 1. ¿Cliente viejo? Identificar por email
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('role')
-          .eq('email', userEmail)
-          .single()
+        try {
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('role')
+            .eq('email', userEmail)
+            .maybeSingle()
 
-        if(profile?.role === 'host'){
-          router.push("/host")
-          return
-        }
-        if(profile?.role === 'guest' || profile?.role === 'store' || profile?.role === 'silo'){
-          router.push("/store")
-          return
-        }
+          if(profile?.role === 'host'){
+            router.push("/host")
+            return
+          }
+          if(profile?.role === 'guest' || profile?.role === 'store' || profile?.role === 'silo'){
+            router.push("/store")
+            return
+          }
+        } catch {}
 
-        // 2. ¿Viene de tarjeta de AFUERA? Respetar
         const role = searchParams.get('role')
         const from = searchParams.get('from')
 
@@ -90,7 +91,6 @@ export default function AuthPage() {
           return
         }
 
-        // 3. Genérico -> obligado al filtro adentro
         router.push("/choose-role")
       }
     } catch (err: any) {
@@ -105,16 +105,13 @@ export default function AuthPage() {
       <form onSubmit={handleAuth} className="w-full max-w-sm">
         <h2 className="text-white text-xl font-bold">{mode==="signin" ? "Welcome back" : "Create account"}</h2>
         <p className="text-zinc-400 text-sm mb-6">{mode==="signin" ? "Sign in to your vault" : "Join your vault"}</p>
-
         <input placeholder="Email" value={email} onChange={(e)=>setEmail(e.target.value)} autoComplete="off" className={`${inputClass} mb-3`} required />
-
         <div className="relative mb-3">
           <input type={showPassword ? "text" : "password"} value={password} onChange={(e)=>setPassword(e.target.value)} placeholder="Password" autoComplete="new-password" className={inputClass} required />
           <button type="button" onClick={()=>setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white">
             {showPassword ? <EyeOff className="w-5 h-5"/> : <Eye className="w-5 h-5"/>}
           </button>
         </div>
-
         {mode==="signup" && (
           <div className="relative mb-4">
             <input type={showConfirm ? "text" : "password"} value={confirm} onChange={(e)=>setConfirm(e.target.value)} placeholder="Confirm password" autoComplete="new-password" className={inputClass} required />
@@ -123,11 +120,9 @@ export default function AuthPage() {
             </button>
           </div>
         )}
-
         <button disabled={loading} className="w-full p-3 bg-[#39FF14] text-black font-bold rounded-xl hover:bg-[#32e612] disabled:opacity-50">
           {loading ? "Loading..." : mode==="signin" ? "Sign In" : "Sign Up"}
         </button>
-
         <style>{`
           input:-webkit-autofill,
           input:-webkit-autofill:hover,
@@ -141,5 +136,13 @@ export default function AuthPage() {
         `}</style>
       </form>
     </div>
+  )
+}
+
+export default function AuthPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-black flex items-center justify-center text-zinc-600">Loading vault...</div>}>
+      <AuthContent />
+    </Suspense>
   )
 }
