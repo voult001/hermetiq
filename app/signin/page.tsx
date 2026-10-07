@@ -1,10 +1,12 @@
+export const dynamic = 'force-dynamic'
+
 "use client"
-import { useState } from "react"
+import { useState, Suspense } from "react"
 import { Eye, EyeOff } from "lucide-react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { supabase } from "@/lib/supabase"
 
-export default function SignInPage(){
+function SignInContent(){
   const [showPassword, setShowPassword] = useState(false)
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -26,20 +28,22 @@ export default function SignInPage(){
     const userEmail = data.user?.email || email
     
     // 1. ¿Es cliente viejo? Identificar por email como pediste
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('role')
-      .eq('email', userEmail)
-      .single()
+    try {
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('role')
+        .eq('email', userEmail)
+        .maybeSingle()
 
-    if(profile?.role === 'host'){
-      router.push("/host")
-      return
-    }
-    if(profile?.role === 'guest' || profile?.role === 'store' || profile?.role === 'silo'){
-      router.push("/store")
-      return
-    }
+      if(profile?.role === 'host'){
+        router.push("/host")
+        return
+      }
+      if(profile?.role === 'guest' || profile?.role === 'store' || profile?.role === 'silo'){
+        router.push("/store")
+        return
+      }
+    } catch {}
 
     // 2. ¿Viene de la tarjeta de AFUERA? Respetar lo que clicó afuera
     const role = searchParams.get('role')
@@ -54,7 +58,7 @@ export default function SignInPage(){
       return
     }
 
-    // 3. Si entró por Sign In genérico de arriba, sin haber escogido afuera -> ADENTRO le toca choose-role
+    // 3. Si entró por Sign In genérico de arriba -> ADENTRO le toca choose-role
     router.push("/choose-role")
   }
 
@@ -77,5 +81,13 @@ export default function SignInPage(){
         </form>
       </div>
     </div>
+  )
+}
+
+export default function SignInPage(){
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-black flex items-center justify-center text-zinc-600">Loading vault...</div>}>
+      <SignInContent />
+    </Suspense>
   )
 }
