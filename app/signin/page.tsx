@@ -1,6 +1,7 @@
-export const dynamic = 'force-dynamic'
 import { Suspense } from "react"
-import SignInClient from "./SignInClient"
+import { SignInClient } from "./SignInClient"
+
+export const dynamic = 'force-dynamic'
 
 export default function Page(){
   return (
