@@ -24,7 +24,7 @@ export default function HostPage(){
       <SiteHeader />
       <div className="max-w-6xl mx-auto p-6 md:p-10">
         <h1 className="text-4xl font-bold text-white mb-2">Welcome back, Host</h1>
-        <p className="text-zinc-400 mb-10">Patent Pending • Encrypted & Distributed</p>
+        <p className="text-zinc-400 mb-10">U.S. Patent App. 67/752,806 • Zero-Knowledge Encrypted</p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
           <div className="bg-[#111] border border-zinc-800 rounded-[24px] p-8">
@@ -73,24 +73,22 @@ export default function HostPage(){
           </button>
         </div>
 
-        <div className="text-center text-zinc-600 text-xs mt-12">SIGILLUQ • Patent Pending • Encrypted & Distributed</div>
+        <div className="text-center text-zinc-600 text-[11px] tracking-widest mt-12">SIGILLUQ © 2026 • U.S. Patent App. 67/752,806 • Zero-Knowledge Encrypted • Miami, FL</div>
       </div>
 
       {showTerms && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur z-50 flex items-center justify-center p-6">
-          <div className="bg-[#111] border border-zinc-800 rounded-[24px] p-8 max-w-lg w-full">
-            <h3 className="text-white font-bold text-xl mb-4">Storage Scan Authorization</h3>
-            <div className="text-zinc-400 text-sm leading-relaxed mb-6 space-y-3">
-              <p>By adding storage, you authorize SIGILLIQ to:</p>
-              <p>1. Scan and measure ONLY the storage space you voluntarily allocate.</p>
-              <p>2. Test speed, availability and secure allocation for distributed storage.</p>
-              <p>3. Verify device uniqueness to prevent fraud.</p>
-              <p>4. We NEVER access your personal files. Only assigned space.</p>
-              <p className="text-zinc-500 text-xs">Revocable anytime by uninstalling the Node. Patent Pending.</p>
+          <div className="bg-[#111] border border-zinc-800 rounded-[24px] p-8 max-w-md w-full">
+            <h3 className="text-white font-bold text-xl mb-6">Storage Authorization</h3>
+            <div className="space-y-3 text-[14px] text-zinc-300 leading-relaxed">
+              <p>We only measure what you share.</p>
+              <p>We scan ONLY free space you allocate</p>
+              <p>We NEVER access your personal files</p>
+              <p>Revocable anytime in one click</p>
             </div>
-            <div className="flex gap-3">
-              <button onClick={() => setShowTerms(false)} className="flex-1 bg-zinc-900 text-zinc-400 py-3 rounded-xl font-bold">Cancel</button>
-              <button onClick={acceptTermsAndScan} className="flex-1 bg-[#39FF14] text-black py-3 rounded-xl font-bold">I Authorize Scan</button>
+            <div className="flex gap-3 mt-8">
+              <button onClick={() => setShowTerms(false)} className="flex-1 bg-zinc-900 text-zinc-400 py-3.5 rounded-full font-bold text-sm">Cancel</button>
+              <button onClick={acceptTermsAndScan} className="flex-1 bg-[#39FF14] text-black py-3.5 rounded-full font-bold text-sm hover:bg-[#39FF14]/90 transition">I Authorize Scan</button>
             </div>
           </div>
         </div>
