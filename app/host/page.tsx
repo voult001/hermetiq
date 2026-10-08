@@ -30,11 +30,11 @@ export default function HostPage(){
     setSuccessMsg(null)
     try {
       // 1. Medir SOLO la cantidad de espacio libre - NO leemos archivos
+      // NUNCA usamos showDirectoryPicker - eso asusta al usuario
       let freeGB = 0
       if ('storage' in navigator && 'estimate' in navigator.storage) {
         const est = await navigator.storage.estimate()
         freeGB = (est.quota || 0) / (1024 ** 3)
-        if (freeGB < 5) freeGB = 120 // fallback para test en Chromebook
       } else {
         freeGB = 120
       }
