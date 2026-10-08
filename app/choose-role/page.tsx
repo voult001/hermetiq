@@ -22,14 +22,14 @@ export default function ChooseRolePage() {
 
       <div className="max-w-6xl mx-auto px-6 md:px-10 py-16">
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-3">Choose Your Path</h1>
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-3">What do you want to do today?</h1>
           <p className="text-sm text-zinc-500">Select how you want to use Sigilluq</p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto items-stretch">
 
-          {/* HOST - B + C COMBINADAS */}
-          <div className="bg-[#111] border border-zinc-800 rounded-[28px] p-10 min-h-[520px] flex flex-col justify-between">
+          {/* HOST */}
+          <div className="bg-[#111] border border-zinc-800 hover:border-zinc-700 rounded-[28px] p-10 min-h-[520px] flex flex-col justify-between transition">
             <div>
               <div className="flex items-center gap-3 mb-8">
                 <div className="h-12 w-12 rounded-2xl bg-[#39FF14]/10 border border-[#39FF14]/20 flex items-center justify-center text-[#39FF14] font-bold text-lg">$</div>
@@ -43,8 +43,8 @@ export default function ChooseRolePage() {
             </button>
           </div>
 
-          {/* SILO - COMBINADO V2 */}
-          <div className="bg-[#111] border border-zinc-800 rounded-[28px] p-10 min-h-[520px] flex flex-col justify-between">
+          {/* SILO */}
+          <div className="bg-[#111] border border-[#39FF14]/20 hover:border-[#39FF14]/40 rounded-[28px] p-10 min-h-[520px] flex flex-col justify-between transition shadow-[0_0_30px_rgba(57,255,20,0.05)]">
             <div>
               <div className="flex items-center gap-3 mb-8">
                 <div className="h-12 w-12 rounded-2xl bg-[#39FF14]/10 border border-[#39FF14]/20 flex items-center justify-center text-[#39FF14] font-bold text-lg">◍</div>
