@@ -90,7 +90,7 @@ export default function SiloPage(){
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
           <div className="lg:col-span-2 space-y-6">
             <div className="bg-[#111] border border-zinc-800 rounded-[24px] p-8">
               <h3 className="text-white font-bold text-xl mb-6">Upload Files</h3>
@@ -148,37 +148,42 @@ export default function SiloPage(){
             </div>
           </div>
 
-          <div className="bg-[#111] border border-zinc-800 rounded-[24px] p-8 h-fit">
+          {/* SELECT STORAGE - STICKY + SCROLL 1-5 VISIBLE */}
+          <div className="bg-[#111] border border-zinc-800 rounded-[24px] p-8 h-fit lg:sticky lg:top-24 flex flex-col">
             <h3 className="text-white font-bold text-xl mb-2">Select Storage</h3>
             <p className="text-zinc-500 text-xs mb-6">Select a plan to start</p>
 
-            <div className="mb-6">
-              <p className="text-[11px] font-bold text-zinc-400 uppercase tracking-widest mb-3">Small Package • Popular</p>
-              {small.map(p=>(
-                <div key={p.id} onClick={()=>setSelected(p.id)} className={`flex justify-between items-center p-4 rounded-2xl border mb-3 cursor-pointer transition ${selected===p.id? 'bg-[#39FF14]/10 border-[#39FF14] shadow-[0_0_15px_rgba(57,255,20,0.15)]' : 'bg-black border-zinc-800 hover:border-zinc-700'}`}>
-                  <span className="flex items-center gap-3 text-sm"><span className={`w-5 h-5 rounded-full border flex items-center justify-center ${selected===p.id?'border-[#39FF14]':'border-zinc-600'}`}>{selected===p.id && <span className="w-2.5 h-2.5 bg-[#39FF14] rounded-full"></span>}</span><span className={selected===p.id?'text-white font-bold':'text-zinc-400'}>{p.id}</span></span>
-                  <span className={`text-[10px] ${selected===p.id?'text-[#39FF14] font-bold':'text-zinc-500'}`}>STORAGE</span>
-                </div>
-              ))}
+            <div className="flex-1 overflow-y-auto max-h-[380px] pr-2 space-y-6 scrollbar-thin scrollbar-thumb-zinc-700 scrollbar-track-black">
+              <div>
+                <p className="text-[11px] font-bold text-zinc-400 uppercase tracking-widest mb-3">Small Package • Popular</p>
+                {small.map(p=>(
+                  <div key={p.id} onClick={()=>setSelected(p.id)} className={`flex justify-between items-center p-4 rounded-2xl border mb-3 cursor-pointer transition ${selected===p.id? 'bg-[#39FF14]/10 border-[#39FF14] shadow-[0_0_15px_rgba(57,255,20,0.15)]' : 'bg-black border-zinc-800 hover:border-zinc-700'}`}>
+                    <span className="flex items-center gap-3 text-sm"><span className={`w-5 h-5 rounded-full border flex items-center justify-center ${selected===p.id?'border-[#39FF14]':'border-zinc-600'}`}>{selected===p.id && <span className="w-2.5 h-2.5 bg-[#39FF14] rounded-full"></span>}</span><span className={selected===p.id?'text-white font-bold':'text-zinc-400'}>{p.id}</span></span>
+                    <span className={`text-[10px] ${selected===p.id?'text-[#39FF14] font-bold':'text-zinc-500'}`}>STORAGE</span>
+                  </div>
+                ))}
+              </div>
+
+              <div>
+                <p className="text-[11px] font-bold text-zinc-400 uppercase tracking-widest mb-3">Big Package • Enterprise</p>
+                {big.map(p=>(
+                  <div key={p.id} onClick={()=>setSelected(p.id)} className={`flex justify-between items-center p-4 rounded-2xl border mb-3 cursor-pointer transition ${selected===p.id? 'bg-[#39FF14]/10 border-[#39FF14] shadow-[0_0_15px_rgba(57,255,20,0.15)]' : 'bg-black border-zinc-800 hover:border-zinc-700'}`}>
+                    <span className="flex items-center gap-3 text-sm"><span className={`w-5 h-5 rounded-full border flex items-center justify-center ${selected===p.id?'border-[#39FF14]':'border-zinc-600'}`}>{selected===p.id && <span className="w-2.5 h-2.5 bg-[#39FF14] rounded-full"></span>}</span><span className={selected===p.id?'text-white font-bold':'text-zinc-400'}>{p.id}</span></span>
+                    <span className={`text-[10px] ${selected===p.id?'text-[#39FF14] font-bold':'text-zinc-500'}`}>ENTERPRISE</span>
+                  </div>
+                ))}
+              </div>
             </div>
 
-            <div className="mb-6">
-              <p className="text-[11px] font-bold text-zinc-400 uppercase tracking-widest mb-3">Big Package • Enterprise</p>
-              {big.map(p=>(
-                <div key={p.id} onClick={()=>setSelected(p.id)} className={`flex justify-between items-center p-4 rounded-2xl border mb-3 cursor-pointer transition ${selected===p.id? 'bg-[#39FF14]/10 border-[#39FF14] shadow-[0_0_15px_rgba(57,255,20,0.15)]' : 'bg-black border-zinc-800 hover:border-zinc-700'}`}>
-                  <span className="flex items-center gap-3 text-sm"><span className={`w-5 h-5 rounded-full border flex items-center justify-center ${selected===p.id?'border-[#39FF14]':'border-zinc-600'}`}>{selected===p.id && <span className="w-2.5 h-2.5 bg-[#39FF14] rounded-full"></span>}</span><span className={selected===p.id?'text-white font-bold':'text-zinc-400'}>{p.id}</span></span>
-                  <span className={`text-[10px] ${selected===p.id?'text-[#39FF14] font-bold':'text-zinc-500'}`}>ENTERPRISE</span>
-                </div>
-              ))}
-            </div>
+            <div className="pt-6 mt-6 border-t border-zinc-800">
+              <button onClick={handlePay} className="w-full rounded-full bg-[#39FF14] text-black font-bold text-sm py-4 hover:bg-[#39FF14]/90 transition shadow-[0_0_20px_rgba(57,255,20,0.2)]">
+                {hasPaid? `Upgrade to ${selected} Silo →` : `Unlock ${selected} Silo →`}
+              </button>
 
-            <button onClick={handlePay} className="w-full rounded-full bg-[#39FF14] text-black font-bold text-sm py-4 hover:bg-[#39FF14]/90 transition">
-              {hasPaid? `Upgrade to ${selected} Silo →` : `Unlock ${selected} Silo →`}
-            </button>
-
-            <div className="mt-6 bg-black rounded-xl p-4 border border-zinc-800">
-              <div className="text-zinc-500 text-[11px] uppercase tracking-widest font-bold mb-2">Security Info</div>
-              <div className="text-zinc-400 text-xs leading-relaxed">Zero-knowledge encryption. Your silo stores only encrypted fragments. SIGILLUQ hosts cannot see, open or access your files. Redundant & blind by design.</div>
+              <div className="mt-6 bg-black rounded-xl p-4 border border-zinc-800">
+                <div className="text-zinc-500 text-[11px] uppercase tracking-widest font-bold mb-2">Security Info</div>
+                <div className="text-zinc-400 text-xs leading-relaxed">Zero-knowledge encryption. Your silo stores only encrypted fragments. SIGILLUQ hosts cannot see, open or access your files. Redundant & blind by design.</div>
+              </div>
             </div>
           </div>
         </div>
