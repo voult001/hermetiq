@@ -10,11 +10,11 @@ export default function SiloPage(){
   const [files, setFiles] = useState<{ name: string; detail: string; icon: string }[]>([])
 
   const small = [
-    { id: "100GB", price: "$9 /mo" },
-    { id: "500GB", price: "$29 /mo" },
-    { id: "1TB", price: "$49 /mo" },
-    { id: "2TB", price: "$79 /mo" },
-    { id: "5TB", price: "$149 /mo" },
+    { id: "100GB" },
+    { id: "500GB" },
+    { id: "1TB" },
+    { id: "2TB" },
+    { id: "5TB" },
   ]
 
   const handlePay = () => {
@@ -149,7 +149,7 @@ export default function SiloPage(){
               {small.map(p=>(
                 <div key={p.id} onClick={()=>setSelected(p.id)} className={`flex justify-between items-center p-4 rounded-2xl border mb-3 cursor-pointer transition ${selected===p.id? 'bg-[#39FF14]/10 border-[#39FF14] shadow-[0_0_15px_rgba(57,255,20,0.15)]' : 'bg-black border-zinc-800 hover:border-zinc-700'}`}>
                   <span className="flex items-center gap-3 text-sm"><span className={`w-5 h-5 rounded-full border flex items-center justify-center ${selected===p.id?'border-[#39FF14]':'border-zinc-600'}`}>{selected===p.id && <span className="w-2.5 h-2.5 bg-[#39FF14] rounded-full"></span>}</span><span className={selected===p.id?'text-white font-bold':'text-zinc-400'}>{p.id}</span></span>
-                  <span className={`text-xs ${selected===p.id?'text-[#39FF14] font-bold':'text-zinc-500'}`}>{p.price}</span>
+                  <span className={`text-[10px] ${selected===p.id?'text-[#39FF14] font-bold':'text-zinc-500'}`}>STORAGE</span>
                 </div>
               ))}
             </div>
