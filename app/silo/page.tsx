@@ -155,7 +155,7 @@ export default function SiloPage(){
             </div>
 
             <button onClick={handlePay} className="w-full rounded-full bg-[#39FF14] text-black font-bold text-sm py-4 hover:bg-[#39FF14]/90 transition">
-              {hasPaid? `Upgrade to ${selected} →` : `Select ${selected} →`}
+              {hasPaid? `Upgrade to ${selected} Silo →` : `Unlock ${selected} Silo →`}
             </button>
 
             <div className="mt-6 bg-black rounded-xl p-4 border border-zinc-800">
